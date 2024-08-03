@@ -496,20 +496,10 @@ a {
   transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
 }
 
-.css-1jy569b-MuiFormLabel-root-MuiInputLabel-root{
-  color:black !important;
-  font-weight: bold !important;
-  text-shadow: 5px 2px 5px rgba(0, 0, 0, 0.3);
-}
-
 /* Hover effect for chips */
 .pokemon-chip:hover {
   background-color: #357abd; /* Darker blue on hover */
   transform: scale(1.05); /* Slightly enlarge the chip on hover */
-  border-radius: 12px;
-}
-
-.MuiAutocomplete-hasPopupIcon.css-1x6bjyf-MuiAutocomplete-root .MuiOutlinedInput-root, .MuiAutocomplete-hasClearIcon.css-1x6bjyf-MuiAutocomplete-root .MuiOutlinedInput-root, .MuiAutocomplete-hasPopupIcon.css-1x6bjyf-MuiAutocomplete-root .MuiOutlinedInput-root, .MuiAutocomplete-hasClearIcon.css-1x6bjyf-MuiAutocomplete-root .MuiOutlinedInput-root{
   border-radius: 12px;
 }
 
@@ -614,6 +604,7 @@ a {
 
 .modal[data-state='open'] {
   animation: unfoldIn .8s ease-in-out;
+  z-index: 999;
 }
 
 .modal[data-state='closed'] {

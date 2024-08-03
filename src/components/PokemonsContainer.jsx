@@ -64,7 +64,24 @@ const PokemonsContainer = ({ type,setTypeColor }) => {
         getOptionLabel={(option) => option.label}
         value={selectedPokemons}
         onChange={handlePokémonChange}
-        renderInput={(params) => <TextField {...params} label={`Search ${type.charAt(0).toUpperCase() + type.slice(1)} Pokemon`} />}
+        disablePortal
+        renderInput={(params) => 
+        <TextField {...params} sx={{
+          "& .MuiAutocomplete-inputRoot": {
+            paddingLeft: "20px !important",
+            borderRadius: "12px",
+          },
+          "& .MuiInputLabel-outlined": {
+            borderRadius: "12px",
+          },
+          "& .MuiInputLabel-shrink": {
+            color:"black !important",
+            fontWeight: "bold !important",
+            textShadow: "0px 5px 10px rgba(0, 0, 0, 0.3)",
+            paddingRight: 0,
+          }}} 
+          label={`Search ${type.charAt(0).toUpperCase() + type.slice(1)} Pokemon`} 
+        />}
         className='pokemon-dropdown'
         style={dropdownStyle} // Apply dynamic style
         renderTags={(tagValue, getTagProps) =>
