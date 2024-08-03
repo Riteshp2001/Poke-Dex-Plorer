@@ -3,7 +3,7 @@ import { Autocomplete, TextField, Chip } from '@mui/material';
 import usePokemons from '../hooks/usePokemons';
 import PokemonCard from './PokemonCard';
 
-const PokemonsContainer = ({ type }) => {
+const PokemonsContainer = ({ type,setTypeColor }) => {
   const [pokemons, setPokemons] = useState([]);
   const [selectedPokemons, setSelectedPokemons] = useState([]);
 
@@ -50,6 +50,8 @@ const PokemonsContainer = ({ type }) => {
   const dropdownStyle = {
     backgroundColor: type ? typeColors[type] : '#fff', // Background color based on type
   };
+
+  setTypeColor(typeColors[type]);
 
   return (
     <div className='pokemons-container-wrapper'>

@@ -281,23 +281,24 @@ a {
 .wrapper .logo-pokemon {
   position: relative;
   display: flex;
-  margin: 0 auto;
-  font-family: 'Pokemon Solid', sans-serif;
-  font-size: max(5vw, 5rem);
-  color: #ffcb05;
-  text-align: center;
-  -webkit-text-stroke: 5px #3b5ca8;
-  text-shadow: -1px 0px 0px #1d2c5e;
+  justify-content: center;
 }
 
-.wrapper .logo-pokemon::before {
-  content: 'Poké Dex Plorer';
-  position: absolute;
-  left: -5px;
-  bottom: -6px;
-  -webkit-text-stroke: transparent;
-  color: #1d2c5e;
-  z-index: -1;
+.logo-pokemon img {
+  max-width: 60%; /* Ensure the image scales properly within the container */
+  height: auto; /* Maintain aspect ratio */
+}
+
+@media (max-width: 768px) {
+  .logo-pokemon img {
+    max-width: 80%; /* Adjust width for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-pokemon img {
+    max-width: 100%; /* Adjust width for very small screens */
+  }
 }
 
 .selected-type {
@@ -399,8 +400,6 @@ a {
 .selected-type.water {
   background: #4a90da;
 }
-
-
 
 .types-bar {
   display: flex;
@@ -632,7 +631,7 @@ a {
   font-weight: 800;
   text-transform: uppercase;
   mask-image: linear-gradient(to bottom, #000 50%, transparent 80%);
-  text-stroke: 2px rgba(255, 255, 255, 0.065);
+  text-shadow: 2px 2px rgba(255, 255, 255, 0.065);
   -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 80%);
   -webkit-text-stroke: 2px rgba(255, 255, 255, 0.065);
   z-index: -1;
@@ -938,6 +937,40 @@ td.range-slide {
   border-radius: 100px;
   animation: fill 1s backwards;
 }
+
+.githublink-corner {
+  position: fixed; /* or absolute, depending on your needs */
+  top: 0;
+  right: 0;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.github-icon {
+  width: 70px;
+  height: 70px;
+  transition: color 0.3s; /* Smooth transition for hover effect */
+}
+
+.github-icon:hover {
+  color: #fff !important; /* GitHub's green color on hover, adjust as needed */
+}
+
+/* Optional: Add some styles to handle responsiveness if necessary */
+@media (max-width: 768px) {
+  .github-icon {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .github-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
 
 @media screen and (min-width: 880px) {
   #root {

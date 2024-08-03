@@ -11,8 +11,6 @@ const useTypes = () => {
             return results.filter(({ name }) => name !== 'unknown' && name !== 'shadow' && name !== 'stellar');
         }
     });
-
-    console.log("type pokeons :",data);
     return data;
 };
 
