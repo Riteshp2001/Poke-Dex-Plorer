@@ -8,10 +8,11 @@ const useTypes = () => {
             const { results } = await apiFetch('/type');
 
             // Return only necessary types
-            return results.filter(({ name }) => name !== 'unknown' && name !== 'shadow');
+            return results.filter(({ name }) => name !== 'unknown' && name !== 'shadow' && name !== 'stellar');
         }
     });
 
+    console.log("type pokeons :",data);
     return data;
 };
 

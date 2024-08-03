@@ -62,7 +62,7 @@ const PokemonsContainer = ({ type }) => {
         getOptionLabel={(option) => option.label}
         value={selectedPokemons}
         onChange={handlePokémonChange}
-        renderInput={(params) => <TextField {...params} label='Select Pokémon' />}
+        renderInput={(params) => <TextField {...params} label={`Search ${type.charAt(0).toUpperCase() + type.slice(1)} Pokemon`} />}
         className='pokemon-dropdown'
         style={dropdownStyle} // Apply dynamic style
         renderTags={(tagValue, getTagProps) =>
