@@ -5,10 +5,6 @@ Pokédex React app that lets you discover and explore Pokémon based on [PokéAP
 Explore and get information about each Pokémon, including their about, stats, and evolution.
 This project built with React.js & React Query for efficient data fetching and caching.
 
-## Preview
-
-![](https://i.imgur.com/xAN9qtd.png)
-
 ## Features
 - Browse Pokémons based on their types
 - Clicking on a Pokémon opens a modal with detailed information
@@ -19,7 +15,7 @@ This project built with React.js & React Query for efficient data fetching and c
 ## Installation
 
 1. Clone the repository: `git clone https://github.com/Riteshp2001/Poke-Dex-Plorer.git`
-2. Navigate to the project directory: `cd pokedex`
+2. Navigate to the project directory: `cd Poke-Dex-Plorer`
 3. Install dependencies: `npm install`
 4. Start the development server: `npm run dev`
 
