@@ -8,7 +8,7 @@ import Loader from './components/Loader';
 import { getTypeIconSrc } from './utils/pokemon-helper';
 
 function App() {
-  const [type, setType] = useState('all');
+  const [type, setType] = useState('normal');
   const [typeColor, setTypeColor] = useState('#9da0aa');
 
   const typeImg = getTypeIconSrc(type);

@@ -4,7 +4,7 @@ import { getTypeIconSrc } from '../utils/pokemon-helper';
 
 const TypesBar = ({ toggleType }) => {
     const types = useTypes();
-    const [selectedType, setSelectedType] = useState('all');
+    const [selectedType, setSelectedType] = useState('normal');
 
     const handleTypeClick = (name) => {
         setSelectedType(name);
@@ -13,12 +13,12 @@ const TypesBar = ({ toggleType }) => {
 
     return (
         <nav className='types-bar'>
-            <a
+            {/* <a
                 key={'all'}
                 className={`all ${selectedType === 'all' ? 'selected' : ''}`}
                 onClick={() => handleTypeClick('all')}
             >
-            </a>
+            </a> */}
             {
                 types.map(({ name }) => {
                     const typeImg = getTypeIconSrc(name);
