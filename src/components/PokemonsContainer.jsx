@@ -3,7 +3,7 @@ import { Autocomplete, TextField, Chip } from '@mui/material';
 import usePokemons from '../hooks/usePokemons';
 import PokemonCard from './PokemonCard';
 
-const PokemonsContainer = ({ type,setTypeColor }) => {
+const PokemonsContainer = ({ type, setTypeColor }) => {
   const [pokemons, setPokemons] = useState([]);
   const [selectedPokemons, setSelectedPokemons] = useState([]);
 
@@ -12,21 +12,18 @@ const PokemonsContainer = ({ type,setTypeColor }) => {
   useEffect(() => {
     setPokemons(allPokemons);
     setSelectedPokemons([]);
-  }, [allPokemons, type]);
+  }, [type, allPokemons]);
 
   const availablePokemons = pokemons.filter(
     pokemon => !selectedPokemons.some(selected => selected.id === pokemon.id)
   );
 
   const handlePokémonChange = (event, newValue) => {
-    const uniquePokemons = Array.from(
-      new Map(newValue.map(pokemon => [pokemon.id, pokemon])).values()
-    );
-    setSelectedPokemons(uniquePokemons);
+    setSelectedPokemons(newValue);
   };
 
-  // Define color based on type
   const typeColors = {
+    all: '#FFD700',
     bug: '#8cb230',
     dark: '#58575f',
     dragon: '#0f6ac0',
@@ -48,42 +45,52 @@ const PokemonsContainer = ({ type,setTypeColor }) => {
   };
 
   const dropdownStyle = {
-    backgroundColor: type ? typeColors[type] : '#fff', // Background color based on type
+    backgroundColor: type ? typeColors[type] : '#fff',
   };
 
-  setTypeColor(typeColors[type]);
+  useEffect(() => {
+    setTypeColor(typeColors[type]);
+  }, [type, setTypeColor]);
 
   return (
     <div className='pokemons-container-wrapper'>
       <Autocomplete
         multiple
+        isOptionEqualToValue={(option, value) => option.id === value.id}
         options={availablePokemons.map(pokemon => ({
-          label: pokemon.name,
+          label: pokemon.name || '',
           id: pokemon.id,
         }))}
-        getOptionLabel={(option) => option.label}
+        getOptionLabel={(option) => {
+          if (!option || !option.label) {
+            console.error("Option is invalid:", option);
+            return '';
+          }
+          return option.label;
+        }}
         value={selectedPokemons}
         onChange={handlePokémonChange}
         disablePortal
-        renderInput={(params) => 
-        <TextField {...params} sx={{
-          "& .MuiAutocomplete-inputRoot": {
-            paddingLeft: "20px !important",
-            borderRadius: "12px",
-          },
-          "& .MuiInputLabel-outlined": {
-            borderRadius: "12px",
-          },
-          "& .MuiInputLabel-shrink": {
-            color:"black !important",
-            fontWeight: "bold !important",
-            textShadow: "0px 5px 10px rgba(0, 0, 0, 0.3)",
-            paddingRight: 0,
-          }}} 
-          label={`Search ${type.charAt(0).toUpperCase() + type.slice(1)} Pokemon`} 
-        />}
+        renderInput={(params) =>
+          <TextField {...params} sx={{
+            "& .MuiAutocomplete-inputRoot": {
+              paddingLeft: "20px !important",
+              borderRadius: "12px",
+            },
+            "& .MuiInputLabel-outlined": {
+              borderRadius: "12px",
+            },
+            "& .MuiInputLabel-shrink": {
+              color: "black !important",
+              fontWeight: "bold !important",
+              textShadow: "0px 5px 10px rgba(0, 0, 0, 0.3)",
+              paddingRight: 0,
+            }
+          }}
+            label={`Search ${type.charAt(0).toUpperCase() + type.slice(1)} Pokemon`}
+          />}
         className='pokemon-dropdown'
-        style={dropdownStyle} // Apply dynamic style
+        style={dropdownStyle}
         renderTags={(tagValue, getTagProps) =>
           tagValue.map((option, index) => (
             <Chip

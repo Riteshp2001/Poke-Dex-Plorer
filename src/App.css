@@ -1,3 +1,8 @@
+:root {
+  --scrollbar-track-color: #F5F5F5;
+  --scrollbar-thumb-color: #D62929;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +11,7 @@
   outline: none;
 }
 
-body{
+body {
   background: #e1e6eb;
 }
 
@@ -24,10 +29,12 @@ a {
   left: 50%;
   width: min(50vw, 200px);
   height: min(50vw, 200px);
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
-.loader div, .loader::before, .loader::after {
+.loader div,
+.loader::before,
+.loader::after {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -54,14 +61,14 @@ a {
 
 @keyframes pulse {
   0% {
-    transform: scale(0.1);  
+    transform: scale(0.1);
     opacity: 0;
   }
 
   50% {
     opacity: 0.4;
   }
-  
+
   100% {
     transform: scale(1.6);
     opacity: 0;
@@ -80,13 +87,13 @@ a {
   padding: 2px 5px;
 }
 
-.types div > span {
+.types div>span {
   text-transform: capitalize;
   color: #fff;
   font-size: 14px;
 }
 
-.types div > img {
+.types div>img {
   margin-right: 5px;
   width: 10px;
   height: 10px;
@@ -96,29 +103,42 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px; /* Increased size for better visibility */
+  width: 60px;
+  /* Increased size for better visibility */
   height: 60px;
   border: 1px solid transparent;
-  border-radius: 10px; /* Slightly rounded corners */
+  border-radius: 10px;
+  /* Slightly rounded corners */
   transition: border-color 0.3s, background-color 0.3s, transform 0.2s;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for depth */
 }
 
 .types-bar a img {
-  max-width: 80%; /* Slightly smaller to fit within the larger area */
+  max-width: 80%;
+  /* Slightly smaller to fit within the larger area */
   max-height: 80%;
 }
 
 .types-bar a:hover {
-  transform: scale(1.05); /* Slight zoom effect on hover */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+  transform: scale(1.05);
+  /* Slight zoom effect on hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  /* Enhanced shadow on hover */
 }
 
 .types-bar a.selected {
-  border: 4px solid #007BFF; /* Highlight border */
-  box-shadow: 0 8px 10px rgba(0, 123, 255, 0.5); /* Stronger shadow for selected item */
-  transform: scale(1.1); /* Slightly larger size for selected item */
+  border: 4px solid #007BFF;
+  /* Highlight border */
+  box-shadow: 0 8px 10px rgba(0, 123, 255, 0.5);
+  /* Stronger shadow for selected item */
+  transform: scale(1.1);
+  /* Slightly larger size for selected item */
+}
+
+.types .all {
+  background: #eef5fd;
 }
 
 .types .bug {
@@ -195,6 +215,10 @@ a {
 
 
 /* style pokemon background color */
+.all {
+  color: gold;
+}
+
 .bug {
   color: #8bd674;
 }
@@ -208,7 +232,7 @@ a {
 }
 
 .electric {
-  color: #f2cb55; 
+  color: #f2cb55;
 }
 
 .fairy {
@@ -285,19 +309,23 @@ a {
 }
 
 .logo-pokemon img {
-  max-width: 60%; /* Ensure the image scales properly within the container */
-  height: auto; /* Maintain aspect ratio */
+  max-width: 60%;
+  /* Ensure the image scales properly within the container */
+  height: auto;
+  /* Maintain aspect ratio */
 }
 
 @media (max-width: 768px) {
   .logo-pokemon img {
-    max-width: 80%; /* Adjust width for smaller screens */
+    max-width: 80%;
+    /* Adjust width for smaller screens */
   }
 }
 
 @media (max-width: 480px) {
   .logo-pokemon img {
-    max-width: 100%; /* Adjust width for very small screens */
+    max-width: 100%;
+    /* Adjust width for very small screens */
   }
 }
 
@@ -305,7 +333,8 @@ a {
   font-size: 2.5rem;
   font-weight: 900;
   margin: 20px 0;
-  color: #fff; /* Ensure the text is readable against the background */
+  color: #fff;
+  /* Ensure the text is readable against the background */
   padding: 20px;
   border-radius: 10px;
   display: inline-block;
@@ -401,10 +430,14 @@ a {
   background: #4a90da;
 }
 
+.selected-type.all {
+  background: #eef5fd;
+}
+
 .types-bar {
   display: flex;
   width: 100%;
-  padding: 15px 2vw; 
+  padding: 15px 2vw;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
@@ -432,7 +465,7 @@ a {
 }
 
 .types-bar a:hover {
-  transform:scale(1.2);
+  transform: scale(1.2);
 }
 
 .pokemons-container {
@@ -455,15 +488,19 @@ a {
   max-width: 400px;
   margin-bottom: 20px;
   border-radius: 12px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Drop shadow for the dropdown */
-  background-color: #fff; /* White background for the dropdown */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  /* Drop shadow for the dropdown */
+  background-color: #fff;
+  /* White background for the dropdown */
 }
 
 /* Style for the autocomplete dropdown */
 .pokemon-dropdown .MuiAutocomplete-popover {
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4); /* Pronounced shadow */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  /* Pronounced shadow */
   border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+  background-color: rgba(255, 255, 255, 0.9);
+  /* Slightly transparent white */
 }
 
 /* Style for dropdown options */
@@ -472,34 +509,35 @@ a {
   font-size: 1.2rem;
   font-weight: bolder;
   border-radius: 12px;
-  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
-  box-shadow:  0 0 5px rgba(0, 0, 0, 0.1); /* Inner shadow for options */
+  transition: background-color 0.3s, transform 0.2s;
+  /* Smooth transitions */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  /* Inner shadow for options */
 }
 
 /* Hover effect for dropdown options */
 .pokemon-dropdown .MuiAutocomplete-option:hover {
-  background-color: rgba(0, 0, 0, 0.1); /* Slightly darkened background on hover */
-  transform: scale(1.02); /* Slightly enlarge the option on hover */
+  background-color: rgba(0, 0, 0, 0.1);
+  /* Slightly darkened background on hover */
+  transform: scale(1.02);
+  /* Slightly enlarge the option on hover */
 }
 
 /* Styles for individual Pokémon chips */
 .pokemon-chip {
-  margin: 4px;
-  background-color: #fff; /* Blue color for chips */
-  color: #F9F6EE !important ; /* White text color */
+  color: #F9F6EE !important;
+  /* White text color */
   font-weight: bolder;
-  font-size: 1.2rem;
-  padding: 6px 12px; /* Adjusted padding for better fit */
-  border-radius: 16px; /* Rounded corners for chips */
-  box-shadow: 5px 2px 5px rgba(0, 0, 0, 0.3); /* Drop shadow for chips */
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
 }
 
 /* Hover effect for chips */
 .pokemon-chip:hover {
-  background-color: #357abd; /* Darker blue on hover */
-  transform: scale(1.05); /* Slightly enlarge the chip on hover */
+  background-color: #357abd;
+  /* Darker blue on hover */
+  transform: scale(1.05);
+  /* Slightly enlarge the chip on hover */
   border-radius: 12px;
 }
 
@@ -556,7 +594,7 @@ a {
   -webkit-mask-size: cover;
 }
 
-.pokemon-card > div:first-of-type {
+.pokemon-card>div:first-of-type {
   display: flex;
   gap: 2px;
   flex-direction: column;
@@ -566,7 +604,7 @@ a {
 .pokemon-card .id-number {
   font-size: 0.9rem;
   font-weight: 800;
-  color: rgba(0, 0, 0, 0.4);  
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .pokemon-card .pokemon-name {
@@ -575,7 +613,7 @@ a {
   color: #fff;
 }
 
-.pokemon-name{
+.pokemon-name {
   text-transform: capitalize;
 }
 
@@ -691,11 +729,11 @@ a {
   width: 50%;
   height: 100%;
   margin-right: 25px;
-  animation: shake .4s cubic-bezier(.36,.07,.19,.97) both, blur .3s ease-out;
+  animation: shake .4s cubic-bezier(.36, .07, .19, .97) both, blur .3s ease-out;
   animation-delay: .55s;
 }
 
-.current-pokemon > div:first-of-type {
+.current-pokemon>div:first-of-type {
   display: flex;
   flex-direction: column;
 }
@@ -793,7 +831,9 @@ a {
   height: 15vw;
 }
 
-.data-container .loader div, .data-container .loader::before, .data-container .loader::after {
+.data-container .loader div,
+.data-container .loader::before,
+.data-container .loader::after {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -858,7 +898,7 @@ a {
   background: #ebe9e9;
 }
 
-.evolution-container .arrow::after { 
+.evolution-container .arrow::after {
   content: '';
   position: absolute;
   height: 2vw;
@@ -871,7 +911,7 @@ a {
   transform: rotate(-40deg);
 }
 
-td > img {
+td>img {
   margin-right: 5px;
   width: max(22px, 1.8vw);
   height: max(22px, 1.8vw);
@@ -930,7 +970,8 @@ td.range-slide {
 }
 
 .githublink-corner {
-  position: fixed; /* or absolute, depending on your needs */
+  position: fixed;
+  /* or absolute, depending on your needs */
   top: 0;
   right: 0;
   display: inline-block;
@@ -940,11 +981,13 @@ td.range-slide {
 .github-icon {
   width: 70px;
   height: 70px;
-  transition: color 0.3s; /* Smooth transition for hover effect */
+  transition: color 0.3s;
+  /* Smooth transition for hover effect */
 }
 
 .github-icon:hover {
-  color: #fff !important; /* GitHub's green color on hover, adjust as needed */
+  color: #fff !important;
+  /* GitHub's green color on hover, adjust as needed */
 }
 
 /* Optional: Add some styles to handle responsiveness if necessary */
@@ -973,7 +1016,7 @@ td.range-slide {
     height: 200px;
     padding: 1.5vw;
   }
-  
+
   .pokemon-card .pokemon-name {
     font-size: 2.2vw;
   }
@@ -1015,11 +1058,11 @@ td.range-slide {
   .current-pokemon span.pokemon-name {
     font-size: 3.5vw;
   }
-  
+
   .modal nav button {
     padding: 1.5vw 2.8vw;
   }
-  
+
   .data-container {
     scrollbar-width: thin;
     scrollbar-color: currentColor transparent;
@@ -1042,7 +1085,7 @@ td.range-slide {
   }
 
   .data-container .category {
-    padding: 0; 
+    padding: 0;
   }
 
   .evolution-container .poke-img {
@@ -1062,12 +1105,30 @@ td.range-slide {
     top: -0.6vw;
     border-width: 0.25vw;
   }
-  
+
   .data-container .loader {
     width: 3.5vw;
     height: 3.5vw;
   }
 }
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: var(--scrollbar-track-color);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: var(--scrollbar-track-color);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: var(--scrollbar-thumb-color);
+}
+
 
 
 /* animations */
@@ -1093,7 +1154,7 @@ td.range-slide {
   0% {
     transform: translate(-50%, 0%) scaleY(.005) scaleX(0);
   }
-  
+
   50% {
     transform: translate(-50%, 0%) scaleY(.005) scaleX(1);
   }
@@ -1127,26 +1188,32 @@ td.range-slide {
     -webkit-filter: blur(15px);
     opacity: 1;
   }
-  
+
   100% {
     -webkit-filter: blur(0);
   }
 }
 
 @keyframes shake {
-  10%, 90% {
+
+  10%,
+  90% {
     transform: translate3d(1px, 0, 0);
   }
-  
-  20%, 80% {
+
+  20%,
+  80% {
     transform: translate3d(2px, 0, 0);
   }
 
-  30%, 50%, 70% {
+  30%,
+  50%,
+  70% {
     transform: translate3d(-3px, 0, 0);
   }
 
-  40%, 60% {
+  40%,
+  60% {
     transform: translate3d(3px, 0, 0);
   }
 }
