@@ -106,12 +106,12 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
         style={{ width: selectedPokemons.length > 0 ? '100%' : 'auto' }}>
         {selectedPokemons.length > 0 ? (
           selectedPokemons.map(pokemon => (
-            <PokemonCard key={pokemon.id} pokemon={pokemons.find(p => p.id === pokemon.id)} />
+            <PokemonCard key={pokemon.uniqueKey} pokemon={pokemons.find(p => p.id === pokemon.id)} />
           ))
         ) : (
           pokemons.length > 0 ? (
             pokemons.map(pokemon => (
-              <PokemonCard key={pokemon.id} pokemon={pokemon} />
+              <PokemonCard key={pokemon.uniqueKey} pokemon={pokemon} />
             ))
           ) : (
             <p>Loading Pokémon...</p>

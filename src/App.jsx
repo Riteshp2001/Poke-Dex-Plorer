@@ -8,8 +8,8 @@ import Loader from './components/Loader';
 import { getTypeIconSrc } from './utils/pokemon-helper';
 
 function App() {
-  const [type, setType] = useState('normal');
-  const [typeColor, setTypeColor] = useState('#9da0aa');
+  const [type, setType] = useState('all');
+  const [typeColor, setTypeColor] = useState('#FFD700');
 
   const typeImg = getTypeIconSrc(type);
 
@@ -54,7 +54,7 @@ function App() {
             <img src='/images/pokedexplorer.svg' alt='Pokemon Logo' />
           </div>
 
-          <TypesBar toggleType={setType} />
+          <TypesBar toggleType={setType} type={type} />
 
           {/* Display the selected type */}
           <div
