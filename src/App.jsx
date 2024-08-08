@@ -9,7 +9,7 @@ import { getTypeIconSrc } from './utils/pokemon-helper';
 
 function App() {
   const [type, setType] = useState('all');
-  const [typeColor, setTypeColor] = useState('#FFD700');
+  const [typeColor, setTypeColor] = useState('#FF0000');
 
   const typeImg = getTypeIconSrc(type);
 

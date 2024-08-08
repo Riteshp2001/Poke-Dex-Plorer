@@ -23,7 +23,7 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
   };
 
   const typeColors = {
-    all: '#FFD700',
+    all: '#FF0000',
     bug: '#8cb230',
     dark: '#58575f',
     dragon: '#0f6ac0',

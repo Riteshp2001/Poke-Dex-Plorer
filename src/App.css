@@ -138,7 +138,7 @@ a {
 }
 
 .types .all {
-  background: #eef5fd;
+  background: #FF0000;
 }
 
 .types .bug {
@@ -216,7 +216,7 @@ a {
 
 /* style pokemon background color */
 .all {
-  color: gold;
+  color: #FF0000;
 }
 
 .bug {
@@ -431,7 +431,7 @@ a {
 }
 
 .selected-type.all {
-  background: #eef5fd;
+  background: #FF0000;
 }
 
 .types-bar {
