@@ -13,6 +13,7 @@
   "dependencies": {
     "@mui/material": "^5.16.6",
     "@radix-ui/react-dialog": "^1.0.3",
+    "@radix-ui/react-visually-hidden": "^1.1.0",
     "@tanstack/react-query": "^4.29.7",
     "@tanstack/react-query-devtools": "^4.29.7",
     "@testing-library/react": "^14.0.0",
