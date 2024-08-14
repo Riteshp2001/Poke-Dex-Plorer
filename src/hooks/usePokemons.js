@@ -5,75 +5,68 @@ import { formatPokemonData } from "../utils/pokemon-helper";
 const allPokeMonStaticData = new Map();
 
 const usePokemons = (type) => {
-    const fetchPokemons = async () => {
-        if (!type) return [];
+  const filterDuplicates = (pokemonsArray) => {
+    const seen = new Set();
+    return pokemonsArray.filter((pokemon) => {
+      const duplicate = seen.has(pokemon.name);
+      seen.add(pokemon.name);
+      return !duplicate;
+    });
+  };
 
-        // Return cached data if available
-        if (allPokeMonStaticData.has(type)) {
-            return allPokeMonStaticData.get(type);
-        }
+  const fetchPokemons = async () => {
+    // Fetch all Pokémon if not already cached
+    if (!allPokeMonStaticData.size) {
+      // Fetch all types
+      const typesResponse = await apiFetch("/type");
+      const allTypes = typesResponse.results.map((typeObj) => typeObj.name);
 
-        // Handle 'all' type: return all Pokémon from the cache if already fetched
-        if (type === 'all' && allPokeMonStaticData.size > 0) {
-            const allPokemonDatabase = Array.from(allPokeMonStaticData.values()).flat();
-                // Remove duplicates by the unique key
-                const uniquePokemons = Array.from(
-                    new Map(allPokemonDatabase.map(pokemon => [pokemon.uniqueKey, pokemon])).values()
-                );
-            return allPokeMonStaticData.size > 0
-                ? uniquePokemons
-                : [];
-        }
+      const validTypes = allTypes.filter(
+        (t) => !["unknown", "shadow", "stellar"].includes(t)
+      );
 
-        // Fetch all types if cache is empty
-        const typesResponse = await apiFetch('/type');
-        const allTypes = typesResponse.results.map(typeObj => typeObj.name);
+      let allPokemonsArray = [];
+      for (const currentType of validTypes) {
+        const { pokemon: pokemonList } = await apiFetch(`/type/${currentType}`);
+        const formattedPokemonsOfType = await Promise.all(
+          pokemonList.map(async ({ pokemon }) => {
+            const res = await fetch(pokemon.url);
+            const data = await res.json();
+            const uniqueKey = `${data.name}-${currentType}`;
 
-        // If all types are cached, return all Pokémon
-        const validTypes = allTypes.filter(t => !['unknown', 'shadow', 'stellar'].includes(t));
-        if (allPokeMonStaticData.size === validTypes.length) {
-            return Array.from(allPokeMonStaticData.values()).flat();
-        }
-
-        // Fetch Pokémon for each type and cache them
-        let allPokemonsArray = [];
-        for (const currentType of allTypes) {
-            if (['unknown', 'shadow', 'stellar'].includes(currentType)) continue;
-
-            if (allPokeMonStaticData.has(currentType)) {
-                allPokemonsArray = allPokemonsArray.concat(allPokeMonStaticData.get(currentType));
-                continue;
-            }
-
-            const { pokemon: pokemonList } = await apiFetch(`/type/${currentType}`);
-            const formattedPokemonsOfType = await Promise.all(
-                pokemonList.map(async ({ pokemon }) => {
-                    const res = await fetch(pokemon.url);
-                    const data = await res.json();
-                    return {
-                        ...formatPokemonData(data),
-                        uniqueKey: `${data.id}-${currentType}`,  // Ensure unique keys
-                    };
-                })
-            );
-
-            allPokeMonStaticData.set(currentType, formattedPokemonsOfType);
-            allPokemonsArray = allPokemonsArray.concat(formattedPokemonsOfType);
-        }
-
-        // Remove duplicates by the unique key
-        const uniquePokemons = Array.from(
-            new Map(allPokemonsArray.map(pokemon => [pokemon.uniqueKey, pokemon])).values()
+            return {
+              ...formatPokemonData(data),
+              uniqueKey: uniqueKey,
+            };
+          })
         );
 
-        return uniquePokemons;
-    };
+        // Filter out duplicates before storing in the cache
+        const filteredPokemons = filterDuplicates(formattedPokemonsOfType);
+        allPokeMonStaticData.set(currentType, filteredPokemons);
+        allPokemonsArray = allPokemonsArray.concat(filteredPokemons);
+      }
 
-    const { data } = useQuery(['pokemons', type], fetchPokemons);
+      // Filter out duplicates before caching all Pokémon data
+      const filteredAllPokemons = filterDuplicates(allPokemonsArray);
+      allPokeMonStaticData.set("all", filteredAllPokemons);
+    }
 
-    console.log("allPokeMonStaticData", allPokeMonStaticData);
+    // Handle 'all' type: return all Pokémon from the cache
+    if (type === "all") {
+      return allPokeMonStaticData.get("all") || [];
+    }
 
-    return data;
+    // Return Pokémon of the specific type from the cache
+    return allPokeMonStaticData.get(type) || [];
+  };
+
+  const { data } = useQuery(["pokemons", type], fetchPokemons);
+
+  // Log the fetched data for debugging
+  console.log("Fetched Pokémon Data:", data);
+
+  return data;
 };
 
 export default usePokemons;

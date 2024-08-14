@@ -696,29 +696,30 @@ a {
   flex: 1
 }
 
-.arrow-back {
+.parent-arrow{
+  display: flex;
+  justify-content: end;
+  align-items: center;
   position: relative;
-  display: inline-block;
-  width: 20px;
-  height: 2px;
-  margin: 10px;
-  background: #fff;
-  cursor: pointer;
+  width: 100%;
+  height: 100%;
 }
 
-.arrow-back::before {
-  content: '';
-  position: absolute;
-  display: inline-block;
-  left: 0;
-  top: -5px;
-  width: 8px;
-  height: 8px;
-  border: 2px solid #fff;
-  border-top-color: transparent;
-  border-right-color: transparent;
-  transform: rotate(45deg);
+.arrow-back {
+  border-radius: 50%;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 72px;
+  text-align: center;
+  color: #ffffff;
+  transition: transform .3s;
 }
+.arrow-back:hover {
+  transform: scale(1.3);
+}
+
 
 .current-pokemon {
   display: flex;

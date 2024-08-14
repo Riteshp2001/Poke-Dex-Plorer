@@ -18,7 +18,8 @@ const TypesBar = ({ toggleType,type }) => {
                 className={`all ${selectedType === 'all' ? 'selected' : ''}`}
                 onClick={() => handleTypeClick('all')}
             >
-                <img src={getTypeIconSrc('all')} alt={name} />
+                <title>all</title>
+                <img src={getTypeIconSrc('all')} alt={'all'} />
             </a>
             {
                 types.map(({ name }) => {

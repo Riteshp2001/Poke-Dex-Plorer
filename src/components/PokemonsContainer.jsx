@@ -1,28 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Autocomplete, TextField, Chip } from '@mui/material';
 import usePokemons from '../hooks/usePokemons';
 import PokemonCard from './PokemonCard';
+import { debounce } from 'lodash';
 
 const PokemonsContainer = ({ type, setTypeColor }) => {
-  const [pokemons, setPokemons] = useState([]);
-  const [selectedPokemons, setSelectedPokemons] = useState([]);
-
   const allPokemons = usePokemons(type);
 
-  useEffect(() => {
-    setPokemons(allPokemons);
-    setSelectedPokemons([]);
-  }, [type, allPokemons]);
+  const [selectedPokemons, setSelectedPokemons] = useState([]);
 
-  const availablePokemons = pokemons.filter(
-    pokemon => !selectedPokemons.some(selected => selected.id === pokemon.id)
-  );
+  // Memoize Pokémon data to avoid unnecessary re-renders
+  const availablePokemons = useMemo(() => {
+    return allPokemons.filter(
+      pokemon => !selectedPokemons.some(selected => selected.id === pokemon.id)
+    );
+  }, [allPokemons, selectedPokemons]);
 
-  const handlePokémonChange = (event, newValue) => {
+  // Debounced function for handling Pokémon selection change
+  const handlePokémonChange = useCallback(debounce((event, newValue) => {
     setSelectedPokemons(newValue);
-  };
+  }, 800), []);
 
-  const typeColors = {
+  const typeColors = useMemo(() => ({
     all: '#FF0000',
     bug: '#8cb230',
     dark: '#58575f',
@@ -42,32 +41,23 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
     rock: '#baab82',
     steel: '#417d9a',
     water: '#4a90da',
-  };
-
-  const dropdownStyle = {
-    backgroundColor: type ? typeColors[type] : '#fff',
-  };
+  }), []);
 
   useEffect(() => {
     setTypeColor(typeColors[type]);
-  }, [type, setTypeColor]);
+  }, [type, setTypeColor, typeColors]);
 
   return (
     <div className='pokemons-container-wrapper'>
       <Autocomplete
         multiple
-        isOptionEqualToValue={(option, value) => option.id === value.id}
+        isOptionEqualToValue={(option, value) => option.uniqueKey === value.uniqueKey}
         options={availablePokemons.map(pokemon => ({
-          label: pokemon.name || '',
+          label: pokemon.name,
           id: pokemon.id,
+          uniqueKey: pokemon.uniqueKey, // Use the persisted unique key
         }))}
-        getOptionLabel={(option) => {
-          if (!option || !option.label) {
-            console.error("Option is invalid:", option);
-            return '';
-          }
-          return option.label;
-        }}
+        getOptionLabel={(option) => option.label || ''}
         value={selectedPokemons}
         onChange={handlePokémonChange}
         disablePortal
@@ -90,11 +80,12 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
             label={`Search ${type.charAt(0).toUpperCase() + type.slice(1)} Pokemon`}
           />}
         className='pokemon-dropdown'
-        style={dropdownStyle}
+        style={{ backgroundColor: typeColors[type] }}
         renderTags={(tagValue, getTagProps) =>
           tagValue.map((option, index) => (
             <Chip
               label={option.label}
+              key={option.uniqueKey} // Use the persisted unique key
               {...getTagProps({ index })}
               className='pokemon-chip'
             />
@@ -106,11 +97,11 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
         style={{ width: selectedPokemons.length > 0 ? '100%' : 'auto' }}>
         {selectedPokemons.length > 0 ? (
           selectedPokemons.map(pokemon => (
-            <PokemonCard key={pokemon.uniqueKey} pokemon={pokemons.find(p => p.id === pokemon.id)} />
+            <PokemonCard key={pokemon.uniqueKey} pokemon={allPokemons.find(p => p.id === pokemon.id)} />
           ))
         ) : (
-          pokemons.length > 0 ? (
-            pokemons.map(pokemon => (
+          allPokemons.length > 0 ? (
+            allPokemons.map(pokemon => (
               <PokemonCard key={pokemon.uniqueKey} pokemon={pokemon} />
             ))
           ) : (

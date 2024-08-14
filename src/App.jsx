@@ -1,5 +1,5 @@
 import './App.css';
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { Suspense, useState, useEffect, useMemo, useCallback } from 'react';
 import TypesBar from './components/TypesBar';
 import PokemonsContainer from './components/PokemonsContainer';
 import Modal from './components/modal/Modal';
@@ -7,15 +7,20 @@ import { PokemonModalProvider } from './context/PokemonModalProvider';
 import Loader from './components/Loader';
 import { getTypeIconSrc } from './utils/pokemon-helper';
 
-function App() {
+const App = React.memo(() => {
   const [type, setType] = useState('all');
   const [typeColor, setTypeColor] = useState('#FF0000');
 
-  const typeImg = getTypeIconSrc(type);
+  const typeImg = useMemo(() => getTypeIconSrc(type), [type]);
 
   useEffect(() => {
     document.documentElement.style.setProperty('--scrollbar-thumb-color', typeColor);
   }, [typeColor]);
+
+  // Memoize setType function to avoid unnecessary re-renders
+  const handleSetType = useCallback((newType) => {
+    setType(newType);
+  }, []);
 
   return (
     <Suspense fallback={<Loader />}>
@@ -54,9 +59,9 @@ function App() {
             <img src='/images/pokedexplorer.svg' alt='Pokemon Logo' />
           </div>
 
-          <TypesBar toggleType={setType} type={type} />
+          {/* Memoized Components */}
+          <TypesBar toggleType={handleSetType} type={type} />
 
-          {/* Display the selected type */}
           <div
             className={`selected-type ${type}`}
             style={{
@@ -74,7 +79,7 @@ function App() {
         <Modal />
       </PokemonModalProvider>
     </Suspense>
-  )
-}
+  );
+});
 
-export default App
+export default App;
