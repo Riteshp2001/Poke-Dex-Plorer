@@ -13,7 +13,9 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
   const availablePokemons = useMemo(() => {
     return allPokemons.filter(
       (pokemon) =>
-        !selectedPokemons.some((selected) => selected.id === pokemon.id)
+        !selectedPokemons.some(
+          (selected) => selected.uniqueKey === pokemon.uniqueKey
+        )
     );
   }, [allPokemons, selectedPokemons]);
 
@@ -58,12 +60,9 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
     <div className="pokemons-container-wrapper">
       <Autocomplete
         multiple
-        isOptionEqualToValue={(option, value) => {
-          return (
-            option.id == value.id &&
-            option.uniqueKey == value.uniqueKey
-          );
-        }}
+        isOptionEqualToValue={(option, value) =>
+          option.uniqueKey === value.uniqueKey
+        }
         options={availablePokemons.map((pokemon) => ({
           label: pokemon.name,
           id: pokemon.id,
