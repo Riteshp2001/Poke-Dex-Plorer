@@ -29,7 +29,9 @@ const usePokemons = (type) => {
     if (allPokeMonStaticData.size === 0) {
       // Fetch all types
       const typesResponse = await apiFetch("/type");
-      const allTypes = typesResponse.results.map((typeObj) => typeObj.name);
+      const allTypes = typesResponse.results.map((typeObj) =>
+        typeObj.name.trim().toLowerCase()
+      );
 
       const validTypes = allTypes.filter(
         (t) => !["unknown", "shadow", "stellar"].includes(t)
@@ -40,12 +42,16 @@ const usePokemons = (type) => {
       // Fetch Pokémon for each type sequentially
       for (const currentType of validTypes) {
         try {
-          const { pokemon: pokemonList } = await apiFetch(`/type/${currentType}`);
+          const { pokemon: pokemonList } = await apiFetch(
+            `/type/${currentType}`
+          );
           const formattedPokemonsOfType = await Promise.all(
             pokemonList.map(async ({ pokemon }) => {
               const res = await fetch(pokemon.url);
               const data = await res.json();
-              const uniqueKey = `${data.name}-${currentType}-${getRandomUuid()}`;
+              const uniqueKey = `${
+                data.name
+              }-${currentType}-${getRandomUuid()}`;
               return {
                 ...formatPokemonData(data),
                 uniqueKey: uniqueKey,
@@ -57,9 +63,11 @@ const usePokemons = (type) => {
           const filteredPokemons = filterDuplicates(formattedPokemonsOfType);
           allPokeMonStaticData.set(currentType, filteredPokemons);
           allPokemonsArray = allPokemonsArray.concat(filteredPokemons);
-
         } catch (error) {
-          console.error(`Error fetching Pokémon of type ${currentType}:`, error);
+          console.error(
+            `Error fetching Pokémon of type ${currentType}:`,
+            error
+          );
         }
       }
 
@@ -75,12 +83,11 @@ const usePokemons = (type) => {
     ["allPokemons"],
     fetchAllPokemons,
     {
-      refetchOnWindowFocus: false, // Prevent refetching on window focus
-      staleTime: Infinity,         // Cache the data indefinitely
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
     }
   );
 
-  // Once the data is fetched and ready, return the relevant Pokémon data
   if (isSuccess) {
     if (type === "all") {
       return data.get("all") || [];

@@ -9,16 +9,12 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
 
   const [selectedPokemons, setSelectedPokemons] = useState([]);
 
-  // Memoize Pokémon data to avoid unnecessary re-renders
-  const availablePokemons = useMemo(() => {
-    return allPokemons.filter(
-      (pokemon) =>
-        !selectedPokemons.some(
-          (selected) => selected.uniqueKey === pokemon.uniqueKey
-        )
-    );
-  }, [allPokemons, selectedPokemons]);
-
+  const availablePokemons = allPokemons.filter(
+    (pokemon) =>
+      !selectedPokemons.some(
+        (selected) => selected.uniqueKey === pokemon.uniqueKey
+      )
+  );
   // Debounced function for handling Pokémon selection change
   const handlePokémonChange = useCallback(
     debounce((event, newValue) => {
@@ -55,6 +51,10 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
   useEffect(() => {
     setTypeColor(typeColors[type]);
   }, [type, setTypeColor, typeColors]);
+
+  useEffect(() => {
+    setSelectedPokemons([]);
+  }, [type]);
 
   return (
     <div className="pokemons-container-wrapper">
