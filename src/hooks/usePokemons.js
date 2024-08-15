@@ -55,7 +55,7 @@ const usePokemons = (type) => {
         const filteredPokemons = filterDuplicates(formattedPokemonsOfType);
         allPokeMonStaticData.set(currentType, filteredPokemons);
         allPokemonsArray = allPokemonsArray.concat(filteredPokemons);
-        console.log("Fetching :",currentType);
+        console.log("Fetching :",currentType , "all Pokemons list is :",validTypes);
       }
 
       // Filter out duplicates before caching all Pokémon data
