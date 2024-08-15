@@ -1,8 +1,8 @@
 const base = 'https://pokeapi.co/api/v2';
 
 export const apiFetch = async (endpoint) => {
+    if(endpoint.isEmpty()) return;
     const res = await fetch(base + endpoint);
-    console.log("Hitting Endpoint : ",base+endpoint);
     if(res.status === 404) {
         throw {
             status: 404,
