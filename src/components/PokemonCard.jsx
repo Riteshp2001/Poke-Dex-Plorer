@@ -4,9 +4,10 @@ import { getTypeIconSrc } from '../utils/pokemon-helper';
 
 const PokemonCard = ({ pokemon, pokemon: { paddedId, name, types, imgSrc } }) => {
     const { openModal } = usePokemonModal();
-    if(types === undefined || types === null) {
+    if (!paddedId || !name || !types || !imgSrc) {
         return null;
     }
+
     return (
         <div
             onClick={() => openModal(pokemon)}
