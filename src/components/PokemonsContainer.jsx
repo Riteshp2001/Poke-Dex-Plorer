@@ -53,7 +53,7 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
   }, [type, setTypeColor, typeColors]);
 
   useEffect(() => {
-    setSelectedPokemons([]);
+    setSelectedPokemons(()=> return []);
   }, [type]);
 
   return (
@@ -68,6 +68,7 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
           id: pokemon.id,
           uniqueKey: pokemon.uniqueKey,
         }))}
+        key = {type}
         getOptionLabel={(option) => option.label || ""}
         value={selectedPokemons}
         onChange={handlePokémonChange}
