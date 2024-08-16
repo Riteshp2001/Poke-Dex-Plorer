@@ -8,6 +8,7 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
   const allPokemons = usePokemons(type);
 
   const [selectedPokemons, setSelectedPokemons] = useState([]);
+  const [key, setKey] = useState(type); // Add a key state to force re-render
 
   const availablePokemons = allPokemons.filter(
     (pokemon) =>
@@ -15,6 +16,7 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
         (selected) => selected.uniqueKey === pokemon.uniqueKey
       )
   );
+
   // Debounced function for handling Pokémon selection change
   const handlePokémonChange = useCallback(
     debounce((event, newValue) => {
@@ -54,11 +56,13 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
 
   useEffect(() => {
     setSelectedPokemons([]);
+    setKey(type);
   }, [type]);
 
   return (
     <div className="pokemons-container-wrapper">
       <Autocomplete
+        key={key}
         multiple
         isOptionEqualToValue={(option, value) =>
           option.uniqueKey === value.uniqueKey
@@ -68,9 +72,8 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
           id: pokemon.id,
           uniqueKey: pokemon.uniqueKey,
         }))}
-        key = {type}
         getOptionLabel={(option) => option.label || ""}
-        value={selectedPokemons}
+        value={selectedPokemons} // Controlled value
         onChange={handlePokémonChange}
         disablePortal
         renderInput={(params) => (
