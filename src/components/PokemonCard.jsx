@@ -2,11 +2,14 @@ import React from 'react';
 import { usePokemonModal } from '../context/PokemonModalProvider';
 import { getTypeIconSrc } from '../utils/pokemon-helper';
 
-const PokemonCard = ({ pokemon, pokemon: { paddedId, name, types, imgSrc } }) => {
-    const { openModal } = usePokemonModal();
-    if (!paddedId || !name || !types || !imgSrc) {
+const PokemonCard = ({ pokemon }) => {
+
+    if (!pokemon || !pokemon.paddedId || !pokemon.name || !pokemon.types || !pokemon.imgSrc) {
         return null;
     }
+
+    const { paddedId, name, types, imgSrc } = pokemon;
+    const { openModal } = usePokemonModal();
 
     return (
         <div
