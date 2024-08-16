@@ -121,7 +121,7 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
           selectedPokemons.map((pokemon) => (
             <PokemonCard
               key={pokemon.uniqueKey}
-              pokemon={allPokemons.find((p) => p.id === pokemon.id)}
+              pokemon={allPokemons.find((p) => p.uniqueKey === pokemon.uniqueKey)}
             />
           ))
         ) : allPokemons.length > 0 ? (
