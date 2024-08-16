@@ -124,7 +124,7 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
               pokemon={allPokemons.find((p) => p.uniqueKey === pokemon.uniqueKey)}
             />
           ))
-        ) : allPokemons.length > 0 ? (
+        ) : (allPokemons.length > 0 && selectedPokemons.length === 0) ? (
           allPokemons.map((pokemon) => (
             <PokemonCard key={pokemon.uniqueKey} pokemon={pokemon} />
           ))
