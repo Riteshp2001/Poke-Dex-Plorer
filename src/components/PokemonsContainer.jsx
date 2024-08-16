@@ -53,7 +53,7 @@ const PokemonsContainer = ({ type, setTypeColor }) => {
   }, [type, setTypeColor, typeColors]);
 
   useEffect(() => {
-    setSelectedPokemons(()=> return []);
+    setSelectedPokemons([]);
   }, [type]);
 
   return (
