@@ -1,5 +1,5 @@
 import { PokemonGrid } from "@/components/pokemon-grid";
-import { SearchBar } from "@/components/search-bar";
+import { InteractiveSearchBar } from "@/components/interactive-search-bar"; // Import the new interactive search bar
 import { searchPokemon } from "@/lib/pokemon";
 import { Suspense } from "react";
 import { SearchSkeleton } from "@/components/search-skeleton"; // Import the skeleton
@@ -14,7 +14,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   return (
     <main className="container mx-auto px-4 py-8 min-h-screen">
       <div className="max-w-2xl mx-auto mb-12">
-        <SearchBar />
+        {/* Replace SearchBar with InteractiveSearchBar */}
+        <InteractiveSearchBar />
       </div>
 
       {query ? (
@@ -55,7 +56,7 @@ async function SearchResults({ query }: { query: string }) {
       </div>
 
       {results.length > 0 ? (
-        <PokemonGrid initialPokemon={results} />
+        <PokemonGrid initialPokemon={results} isSearchResultPage={true} />
       ) : (
         <div className="text-center py-16 glass-panel rounded-xl">
           <h2 className="text-2xl font-medium mb-3 text-foreground">

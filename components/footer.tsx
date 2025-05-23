@@ -1,10 +1,10 @@
-import Link from "next/link"
-import { Github } from "lucide-react"
+import Link from "next/link";
+import { Github } from "lucide-react";
 
 export function Footer() {
   return (
     <footer className="border-t py-8 md:py-12">
-      <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
+      <div className="flex flex-col px-6 items-center justify-between gap-4 md:flex-row">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-rose-600 flex items-center justify-center shadow-md">
             <div className="w-4 h-4 rounded-full bg-white border-2 border-gray-800"></div>
@@ -29,7 +29,7 @@ export function Footer() {
 
         <div className="flex items-center gap-4">
           <Link
-            href="https://github.com/yourusername/pokedex-explorer"
+            href="github.com/Riteshp2001/Poke-Dex-Plorer"
             target="_blank"
             rel="noreferrer"
             className="text-sm font-medium underline underline-offset-4 flex items-center gap-1"
@@ -39,6 +39,17 @@ export function Footer() {
           </Link>
         </div>
       </div>
+      <div className="mt-2 text-center text-sm text-muted-foreground">
+        Made with ❤️ by{" "}
+        <Link
+          href="https://riteshdpandit.vercel.app/"
+          target="_blank"
+          rel="noreferrer"
+          className="font-medium underline underline-offset-4"
+        >
+          Ritesh Pandit
+        </Link>
+      </div>
     </footer>
-  )
+  );
 }

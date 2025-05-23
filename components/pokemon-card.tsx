@@ -32,7 +32,10 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
 
   return (
     <motion.div variants={item}>
-      <Link href={`/pokedex/${pokemon.id}`} className="group block">
+      <Link
+        href={`/pokedex/${pokemon.name.toLowerCase()}-${pokemon.id}`}
+        className="group block"
+      >
         <Card className="overflow-hidden pokemon-card border-0 shadow-lg">
           <div
             className={`p-6 flex items-center justify-center bg-gradient-to-br ${getBackgroundByType(

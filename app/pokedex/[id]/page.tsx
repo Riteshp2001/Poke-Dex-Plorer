@@ -14,7 +14,12 @@ import PokemonTabs from "@/components/pokemon-tabs";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   try {
-    const pokemon = await fetchPokemonById(Number.parseInt(params.id));
+    const slug = params.id;
+    const id = parseInt(slug.split("-").pop() || "");
+    if (isNaN(id)) {
+      notFound();
+    }
+    const pokemon = await fetchPokemonById(id);
     return {
       title: `${
         pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
@@ -32,10 +37,26 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function PokemonPage({
   params,
 }: {
-  params: { id: string };
+  params: { id: string }; // id is now name-id string
 }) {
   try {
-    const id = Number.parseInt(params.id);
+    const slug = params.id;
+    const parts = slug.split("-");
+    const idString = parts.pop();
+    // const name = parts.join('-'); // If you need the name part
+
+    if (!idString) {
+      console.error("Could not extract ID from slug:", slug);
+      notFound();
+    }
+
+    const id = Number.parseInt(idString);
+
+    if (isNaN(id)) {
+      console.error("Parsed ID is NaN from slug:", slug);
+      notFound();
+    }
+
     const pokemon = await fetchPokemonById(id);
     const species = await fetchPokemonSpecies(id);
 
@@ -48,7 +69,19 @@ export default async function PokemonPage({
         .replace(/\n/g, " ") || "No description available.";
 
     const prevId = id > 1 ? id - 1 : null;
-    const nextId = id < 1010 ? id + 1 : null;
+    const nextId = id < 1010 ? id + 1 : null; // Assuming 1010 is max, adjust if needed
+
+    // Get previous/next pokemon data for name in slug
+    let prevPokemonName = "";
+    if (prevId) {
+      const prevPokemon = await fetchPokemonById(prevId);
+      prevPokemonName = prevPokemon.name.toLowerCase();
+    }
+    let nextPokemonName = "";
+    if (nextId) {
+      const nextPokemon = await fetchPokemonById(nextId);
+      nextPokemonName = nextPokemon.name.toLowerCase();
+    }
 
     // Get background gradient based on Pokemon's primary type
     const primaryType = pokemon.types[0]?.type.name || "normal";
@@ -65,28 +98,32 @@ export default async function PokemonPage({
           </Button>
 
           <div className="flex gap-2">
-            {prevId && (
+            {prevId && prevPokemonName && (
               <Button
                 variant="outline"
                 size="icon"
                 className="rounded-full"
                 asChild
               >
-                <Link href={`/pokedex/${prevId}`}>
+                <Link href={`/pokedex/${prevPokemonName}-${prevId}`}>
+                  {" "}
+                  {/* Updated href */}
                   <ChevronLeft className="h-4 w-4" />
                   <span className="sr-only">Previous Pokémon</span>
                 </Link>
               </Button>
             )}
 
-            {nextId && (
+            {nextId && nextPokemonName && (
               <Button
                 variant="outline"
                 size="icon"
                 className="rounded-full"
                 asChild
               >
-                <Link href={`/pokedex/${nextId}`}>
+                <Link href={`/pokedex/${nextPokemonName}-${nextId}`}>
+                  {" "}
+                  {/* Updated href */}
                   <ChevronRight className="h-4 w-4" />
                   <span className="sr-only">Next Pokémon</span>
                 </Link>

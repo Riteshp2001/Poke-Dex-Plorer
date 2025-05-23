@@ -115,25 +115,52 @@ export async function searchPokemon(query: string) {
     // Try to fetch by ID if query is a number
     if (!isNaN(Number(query))) {
       const pokemon = await fetchPokemonById(Number(query));
-      return pokemon ? [pokemon] : []; // Ensure pokemon exists
+      return pokemon ? [pokemon] : [];
     }
 
-    // Otherwise search by name (exact match)
-    // The API handles partial matches by not finding them, leading to 404.
-    // We'll catch this and return an empty array, as the suggestions will handle partials.
-    const pokemon = await fetchData(
-      `https://pokeapi.co/api/v2/pokemon/${query.toLowerCase()}`
+    // Try exact name match first
+    const allNames = await fetchAllPokemonNames();
+    const exactMatch = allNames.find(
+      (name: string) => name.toLowerCase() === query.trim().toLowerCase()
     );
-    return pokemon ? [pokemon] : []; // Ensure pokemon exists
+    if (exactMatch) {
+      // Fetch and return the exact match
+      const pokemon = await fetchData(
+        `https://pokeapi.co/api/v2/pokemon/${exactMatch}`
+      );
+      return pokemon ? [pokemon] : [];
+    }
+
+    // Otherwise, do a partial match (case-insensitive)
+    const filteredNames = allNames.filter((name: string) =>
+      name.toLowerCase().includes(query.trim().toLowerCase())
+    );
+    if (filteredNames.length === 0) return [];
+
+    // Fetch all matching Pokémon (limit to 20 for performance)
+    const batchSize = 3;
+    const results = [];
+    for (let i = 0; i < filteredNames.length && i < 20; i += batchSize) {
+      const batch = filteredNames.slice(i, i + batchSize);
+      const batchData = await Promise.all(
+        batch.map(async (name: string) => {
+          try {
+            return await fetchData(`https://pokeapi.co/api/v2/pokemon/${name}`);
+          } catch {
+            return null;
+          }
+        })
+      );
+      results.push(...batchData.filter(Boolean));
+      if (i + batchSize < filteredNames.length && i + batchSize < 20) {
+        await new Promise((resolve) => setTimeout(resolve, 300));
+      }
+    }
+    return results;
   } catch (error: any) {
-    // If a 404 error occurs (or any other error during direct fetch),
-    // return an empty array. The search page will then display "No results".
-    // The suggestions dropdown will handle partial matches separately.
     if (error.message && error.message.includes("404")) {
-      // console.log(`Pokemon "${query}" not found by direct API call.`);
       return [];
     }
-    // For other errors, log them but still return empty to prevent page crash
     console.error(`Error in searchPokemon for query "${query}":`, error);
     return [];
   }
@@ -197,6 +224,31 @@ export async function fetchAllPokemonNames() {
   } catch (error) {
     console.error("Error fetching all Pokemon names:", error);
     return []; // Return empty array on error
+  }
+}
+
+// Fetch all Pokemon names for suggestions
+export async function fetchAllPokemonNamesForSuggestions() {
+  try {
+    // Using a slightly larger limit to ensure most names are available for type-ahead
+    const response = await fetch(
+      "https://pokeapi.co/api/v2/pokemon?limit=1500"
+    );
+    if (!response.ok) {
+      // Log the error but don't let it crash the suggestion fetching
+      console.error(
+        `Failed to fetch Pokémon names: ${response.status} ${response.statusText}`
+      );
+      return [];
+    }
+    const data = await response.json();
+    // Ensure data.results is an array before mapping
+    return Array.isArray(data.results)
+      ? data.results.map((pokemon: { name: string }) => pokemon.name)
+      : [];
+  } catch (error) {
+    console.error("Error fetching all Pokemon names for suggestions:", error);
+    return []; // Return empty array on error to prevent crashing suggestions
   }
 }
 
