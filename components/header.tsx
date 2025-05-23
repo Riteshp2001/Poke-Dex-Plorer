@@ -38,7 +38,7 @@ export function Header() {
           : "bg-transparent"
       }`}
     >
-      <div className="container flex h-16 items-center justify-between">
+      <div className="container flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2 group">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-rose-600 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-110">

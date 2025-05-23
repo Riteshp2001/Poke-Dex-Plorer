@@ -1,48 +1,53 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import Image from "next/image"
-import { Card, CardContent } from "@/components/ui/card"
-import { motion } from "framer-motion"
+import Link from "next/link";
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 interface PokemonCardProps {
   pokemon: {
-    id: number
-    name: string
+    id: number;
+    name: string;
     sprites: {
       other: {
         "official-artwork": {
-          front_default: string
-        }
-      }
-    }
+          front_default: string;
+        };
+      };
+    };
     types: {
       type: {
-        name: string
-      }
-    }[]
-  }
+        name: string;
+      };
+    }[];
+  };
 }
 
 export function PokemonCard({ pokemon }: PokemonCardProps) {
   const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 },
-  }
+  };
 
   return (
     <motion.div variants={item}>
       <Link href={`/pokedex/${pokemon.id}`} className="group block">
         <Card className="overflow-hidden pokemon-card border-0 shadow-lg">
           <div
-            className={`p-6 flex items-center justify-center bg-gradient-to-br ${getBackgroundByType(pokemon.types[0]?.type.name)}`}
+            className={`p-6 flex items-center justify-center bg-gradient-to-br ${getBackgroundByType(
+              pokemon.types[0]?.type.name
+            )}`}
           >
             <motion.div
               whileHover={{ scale: 1.1, rotate: 2 }}
               transition={{ type: "spring", stiffness: 300, damping: 10 }}
             >
               <Image
-                src={pokemon.sprites.other["official-artwork"].front_default || "/placeholder.svg"}
+                src={
+                  pokemon.sprites.other["official-artwork"].front_default ||
+                  "/placeholder.svg"
+                }
                 alt={pokemon.name}
                 width={180}
                 height={180}
@@ -60,14 +65,18 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
                 >
                   {pokemon.name}
                 </h3>
-                <p className="text-sm text-muted-foreground font-mono">#{pokemon.id.toString().padStart(3, "0")}</p>
+                <p className="text-sm text-muted-foreground font-mono">
+                  #{pokemon.id.toString().padStart(3, "0")}
+                </p>
               </div>
               <div className="flex flex-col gap-1">
                 {pokemon.types.map((type) => (
                   <span
                     key={type.type.name}
                     className={`pokemon-type type-${type.type.name}`}
-                    style={{ viewTransitionName: `pokemon-type-${pokemon.id}-${type.type.name}` }}
+                    style={{
+                      viewTransitionName: `pokemon-type-${pokemon.id}-${type.type.name}`,
+                    }}
                   >
                     {type.type.name}
                   </span>
@@ -78,7 +87,7 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
         </Card>
       </Link>
     </motion.div>
-  )
+  );
 }
 
 // Helper function to get background gradient based on Pokemon type
@@ -102,7 +111,7 @@ function getBackgroundByType(type: string): string {
     dark: "from-gray-700 to-gray-600",
     steel: "from-gray-400 to-slate-300",
     fairy: "from-pink-300 to-pink-200",
-  }
+  };
 
-  return typeBackgrounds[type] || "from-gray-200 to-gray-300"
+  return typeBackgrounds[type] || "from-gray-200 to-gray-300";
 }

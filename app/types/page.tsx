@@ -1,18 +1,21 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Card, CardContent } from "@/components/ui/card"
-import { fetchData } from "@/lib/pokemon"
-import { motion } from "framer-motion"
+import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
+import { fetchTypes } from "@/lib/pokemon";
+import { motion } from "framer-motion";
+import React from "react";
 
-async function fetchTypes() {
-  const data = await fetchData("https://pokeapi.co/api/v2/type")
-  return data.results.filter((type: { name: string }) => !["unknown", "shadow"].includes(type.name))
-}
+export default function TypesPage() {
+  const [types, setTypes] = React.useState<Array<{ name: string }>>([]);
 
-export default async function TypesPage() {
-  const types = await fetchTypes()
-
+  React.useEffect(() => {
+    async function loadTypes() {
+      const data = await fetchTypes();
+      setTypes(data);
+    }
+    loadTypes();
+  }, []);
   return (
     <main className="container mx-auto px-4 py-8">
       <div className="max-w-3xl mx-auto text-center mb-12">
@@ -20,7 +23,8 @@ export default async function TypesPage() {
           Pokémon Types
         </h1>
         <p className="text-muted-foreground">
-          Explore Pokémon by their elemental types and discover their unique characteristics
+          Explore Pokémon by their elemental types and discover their unique
+          characteristics
         </p>
       </div>
 
@@ -33,9 +37,13 @@ export default async function TypesPage() {
             transition={{ delay: 0.05 * index }}
           >
             <Link href={`/pokedex?type=${type.name}`}>
-              <Card className={`hover:shadow-lg transition-all type-${type.name} border-0 pokemon-card`}>
+              <Card
+                className={`hover:shadow-lg transition-all type-${type.name} border-0 pokemon-card`}
+              >
                 <CardContent className="p-6 flex items-center justify-center">
-                  <span className="text-lg font-medium capitalize text-white">{type.name}</span>
+                  <span className="text-lg font-medium capitalize text-white">
+                    {type.name}
+                  </span>
                 </CardContent>
               </Card>
             </Link>
@@ -43,5 +51,5 @@ export default async function TypesPage() {
         ))}
       </div>
     </main>
-  )
+  );
 }

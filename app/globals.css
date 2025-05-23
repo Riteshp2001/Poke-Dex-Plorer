@@ -3,192 +3,197 @@
 @tailwind utilities;
 
 @layer base {
-	:root {
-		--background: 0 0% 100%;
-		--foreground: 240 10% 3.9%;
-		--card: 0 0% 100%;
-		--card-foreground: 240 10% 3.9%;
-		--popover: 0 0% 100%;
-		--popover-foreground: 240 10% 3.9%;
-		--primary: 358 83% 56%;
-		--primary-foreground: 0 0% 98%;
-		--secondary: 240 4.8% 95.9%;
-		--secondary-foreground: 240 5.9% 10%;
-		--muted: 240 4.8% 95.9%;
-		--muted-foreground: 240 3.8% 46.1%;
-		--accent: 240 4.8% 95.9%;
-		--accent-foreground: 240 5.9% 10%;
-		--destructive: 0 84.2% 60.2%;
-		--destructive-foreground: 0 0% 98%;
-		--border: 240 5.9% 90%;
-		--input: 240 5.9% 90%;
-		--ring: 358 83% 56%;
-		--radius: 1rem;
-	}
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 358 83% 56%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 358 83% 56%;
+    --radius: 1rem;
+  }
 
-	.dark {
-		--background: 240 10% 3.9%;
-		--foreground: 0 0% 98%;
-		--card: 240 10% 3.9%;
-		--card-foreground: 0 0% 98%;
-		--popover: 240 10% 3.9%;
-		--popover-foreground: 0 0% 98%;
-		--primary: 358 83% 56%;
-		--primary-foreground: 0 0% 98%;
-		--secondary: 240 3.7% 15.9%;
-		--secondary-foreground: 0 0% 98%;
-		--muted: 240 3.7% 15.9%;
-		--muted-foreground: 240 5% 64.9%;
-		--accent: 240 3.7% 15.9%;
-		--accent-foreground: 0 0% 98%;
-		--destructive: 0 62.8% 30.6%;
-		--destructive-foreground: 0 0% 98%;
-		--border: 240 3.7% 15.9%;
-		--input: 240 3.7% 15.9%;
-		--ring: 358 83% 56%;
-	}
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 358 83% 56%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 358 83% 56%;
+  }
 }
 
 @layer base {
-	* {
-		@apply border-border;
-	}
-	body {
-		@apply bg-background text-foreground;
-	}
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
-/* Pokemon Type Colors */
+/* Pokemon Type Colors - Minimalistic Matte Design */
 .pokemon-type {
-	@apply inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-semibold text-white shadow-sm;
+  @apply inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-medium border transition-colors duration-200;
 }
 
 .type-normal {
-	@apply bg-gray-400;
+  @apply bg-black text-white border-gray-400 hover:bg-[#2f2f2f] dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600;
 }
 .type-fire {
-	@apply bg-gradient-to-r from-red-500 to-orange-500;
+  @apply bg-[#FF6B4D] text-white border-[#FF3C00] hover:bg-[#FF3C00] dark:bg-[#CC4125] dark:text-white dark:border-[#FF6B4D];
 }
 .type-water {
-	@apply bg-gradient-to-r from-blue-500 to-blue-400;
+  @apply bg-[#4D9EFF] text-white border-[#006DFF] hover:bg-[#006DFF] dark:bg-[#1E3A8A] dark:text-white dark:border-[#60A5FA];
 }
 .type-electric {
-	@apply bg-gradient-to-r from-yellow-400 to-amber-300;
+  @apply bg-[#FFD93D] text-black border-[#FFB800] hover:bg-[#FFB800] dark:bg-[#FFD93D] dark:text-black dark:border-[#FFC700];
 }
 .type-grass {
-	@apply bg-gradient-to-r from-green-500 to-emerald-400;
+  @apply bg-[#63D471] text-white border-[#2EBE4F] hover:bg-[#2EBE4F] dark:bg-[#15803D] dark:text-white dark:border-[#63D471];
 }
 .type-ice {
-	@apply bg-gradient-to-r from-blue-300 to-cyan-200;
+  @apply bg-[#78F0F9] text-black border-[#2DD4BF] hover:bg-[#2DD4BF] dark:bg-[#0F766E] dark:text-white dark:border-[#67E8F9];
 }
 .type-fighting {
-	@apply bg-gradient-to-r from-red-700 to-red-600;
+  @apply bg-[#FF5E6C] text-white border-[#D72638] hover:bg-[#D72638] dark:bg-[#991B1B] dark:text-white dark:border-[#FF5E6C];
 }
 .type-poison {
-	@apply bg-gradient-to-r from-purple-600 to-fuchsia-500;
+  @apply bg-[#C084FC] text-white border-[#9333EA] hover:bg-[#9333EA] dark:bg-[#6B21A8] dark:text-white dark:border-[#C084FC];
 }
 .type-ground {
-	@apply bg-gradient-to-r from-yellow-700 to-amber-600;
+  @apply bg-[#E8B77B] text-black border-[#C08401] hover:bg-[#D97706] dark:bg-[#78350F] dark:text-white dark:border-[#FACC15];
 }
 .type-flying {
-	@apply bg-gradient-to-r from-indigo-400 to-sky-300;
+  @apply bg-[#A5B4FC] text-black border-[#6366F1] hover:bg-[#6366F1] dark:bg-[#4338CA] dark:text-white dark:border-[#A5B4FC];
 }
 .type-psychic {
-	@apply bg-gradient-to-r from-pink-500 to-rose-400;
+  @apply bg-[#FB6F92] text-white border-[#D61F69] hover:bg-[#D61F69] dark:bg-[#9D174D] dark:text-white dark:border-[#FB6F92];
 }
 .type-bug {
-	@apply bg-gradient-to-r from-lime-500 to-green-400;
+  @apply bg-[#A3E635] text-black border-[#65A30D] hover:bg-[#84CC16] dark:bg-[#365314] dark:text-white dark:border-[#A3E635];
 }
 .type-rock {
-	@apply bg-gradient-to-r from-stone-600 to-stone-500;
+  @apply bg-[#FBBF24] text-black border-[#D97706] hover:bg-[#D97706] dark:bg-[#92400E] dark:text-white dark:border-[#FBBF24];
 }
 .type-ghost {
-	@apply bg-gradient-to-r from-purple-800 to-indigo-700;
+  @apply bg-[#C084FC] text-white border-[#9333EA] hover:bg-[#9333EA] dark:bg-[#6B21A8] dark:text-white dark:border-[#C084FC];
 }
 .type-dragon {
-	@apply bg-gradient-to-r from-indigo-700 to-blue-600;
+  @apply bg-[#7C3AED] text-white border-[#6D28D9] hover:bg-[#6D28D9] dark:bg-[#4C1D95] dark:text-white dark:border-[#7C3AED];
 }
 .type-dark {
-	@apply bg-gradient-to-r from-gray-800 to-gray-700;
+  @apply bg-[#9CA3AF] text-black border-[#4B5563] hover:bg-[#6B7280] dark:bg-[#1F2937] dark:text-white dark:border-[#9CA3AF];
 }
 .type-steel {
-	@apply bg-gradient-to-r from-gray-500 to-slate-400;
+  @apply bg-[#CBD5E1] text-black border-[#64748B] hover:bg-[#94A3B8] dark:bg-[#334155] dark:text-white dark:border-[#CBD5E1];
 }
 .type-fairy {
-	@apply bg-gradient-to-r from-pink-400 to-pink-300;
+  @apply bg-[#F9A8D4] text-black border-[#EC4899] hover:bg-[#EC4899] dark:bg-[#9D174D] dark:text-white dark:border-[#F9A8D4];
+}
+
+/* ✨ Unique Stellar Type */
+.type-stellar {
+  @apply bg-gradient-to-r from-indigo-600 via-pink-500 to-yellow-400 text-white border-transparent hover:brightness-110 dark:from-purple-700 dark:via-indigo-600 dark:to-yellow-500;
 }
 
 /* Card hover effects */
 .pokemon-card {
-	transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .pokemon-card:hover {
-	transform: scale(1.02);
-	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 /* Stat bars */
 .stat-bar {
-	@apply h-2 rounded-full overflow-hidden bg-muted relative;
+  @apply h-2 rounded-full overflow-hidden bg-muted relative;
 }
 
 .stat-value {
-	@apply h-full rounded-full transition-all duration-500;
+  @apply h-full rounded-full transition-all duration-500;
 }
 
 /* Pixelated sprites */
 .pixelated {
-	image-rendering: pixelated;
+  image-rendering: pixelated;
 }
 
 /* Glassmorphism */
 .glass-panel {
-	@apply bg-background/80 backdrop-blur-md border rounded-2xl shadow-lg;
+  @apply bg-background/80 backdrop-blur-md border rounded-2xl shadow-lg;
 }
 
 /* Animations */
 @keyframes float {
-	0% {
-		transform: translateY(0px);
-	}
-	50% {
-		transform: translateY(-10px);
-	}
-	100% {
-		transform: translateY(0px);
-	}
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .float-animation {
-	animation: float 3s ease-in-out infinite;
+  animation: float 3s ease-in-out infinite;
 }
 
 /* Loading spinner */
 .loading-spinner {
-	@apply w-12 h-12 rounded-full border-4 border-primary border-t-transparent animate-spin;
+  @apply w-12 h-12 rounded-full border-4 border-primary border-t-transparent animate-spin;
 }
 
 /* Custom scrollbar */
 @layer utilities {
-	.scrollbar-thin {
-		scrollbar-width: thin;
-	}
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
 
-	.scrollbar-thin::-webkit-scrollbar {
-		width: 6px;
-		height: 6px;
-	}
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
 
-	.scrollbar-thin::-webkit-scrollbar-track {
-		@apply bg-transparent;
-	}
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
 
-	.scrollbar-thin::-webkit-scrollbar-thumb {
-		@apply bg-muted-foreground/30 rounded-full;
-	}
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full;
+  }
 
-	.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-		@apply bg-muted-foreground/50;
-	}
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
 }
