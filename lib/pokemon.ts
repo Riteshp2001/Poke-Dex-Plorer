@@ -35,6 +35,36 @@ async function fetchData(url: string) {
   throw new Error(`Failed to fetch data from ${url} after multiple attempts`);
 }
 
+// Fetch a list of Pokemon with pagination
+export async function fetchPokemon(page = 1, limit = 12) {
+  // Reduced limit from 24 to 12
+  const offset = (page - 1) * limit;
+  const data = await fetchData(
+    `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
+  );
+
+  // Process in batches to avoid too many concurrent requests
+  const pokemonData = [];
+  const batchSize = 3; // Process 3 at a time
+
+  for (let i = 0; i < data.results.length; i += batchSize) {
+    const batch = data.results.slice(i, i + batchSize);
+    const batchData = await Promise.all(
+      batch.map(async (pokemon: { url: string }) => {
+        return fetchData(pokemon.url);
+      })
+    );
+    pokemonData.push(...batchData);
+
+    // Add a small delay between batches
+    if (i + batchSize < data.results.length) {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+    }
+  }
+
+  return pokemonData;
+}
+
 // Fetch a single Pokemon by ID
 export async function fetchPokemonById(id: number) {
   return fetchData(`https://pokeapi.co/api/v2/pokemon/${id}`);
