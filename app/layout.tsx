@@ -5,7 +5,6 @@ import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { ViewTransitions } from "./view-transitions"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -29,7 +28,6 @@ export default function RootLayout({
             <div className="flex-1">{children}</div>
             <Footer />
           </div>
-          <ViewTransitions />
         </ThemeProvider>
       </body>
     </html>
