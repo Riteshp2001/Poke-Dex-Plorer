@@ -1,19 +1,14 @@
 "use client";
 
 import type React from "react";
-import {
-  useState,
-  useEffect,
-  ChangeEvent,
-  KeyboardEvent,
-  useRef,
-} from "react";
+import { useState, useEffect, ChangeEvent, KeyboardEvent, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search as SearchIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import { fetchAllPokemonNamesForSuggestions } from "@/lib/pokemon";
+import { cn } from "@/lib/utils";
 
 export function SearchBar() {
   const [query, setQuery] = useState("");
@@ -124,10 +119,7 @@ export function SearchBar() {
   };
 
   return (
-    <div
-      className="relative w-full max-w-lg mx-auto"
-      ref={searchContainerRef}
-    >
+    <div className="relative w-full max-w-lg mx-auto" ref={searchContainerRef}>
       <motion.form
         onSubmit={handleSearch}
         className="flex w-full"
@@ -136,28 +128,36 @@ export function SearchBar() {
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
       >
         <div className="relative flex-1">
-          <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <SearchIcon className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground transition-colors duration-200" />
           <motion.div
             animate={{
               scale: isFocused ? 1.02 : 1,
               boxShadow: isFocused
-                ? "0 4px 20px rgba(0, 0, 0, 0.1)"
-                : "0 2px 10px rgba(0, 0, 0, 0.05)",
+                ? "0 6px 20px rgba(0, 0, 0, 0.12)"
+                : "0 2px 8px rgba(0, 0, 0, 0.06)",
             }}
-            className="rounded-full overflow-hidden"
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="rounded-xl overflow-hidden bg-background transition-all"
           >
             <Input
               type="text"
-              placeholder="Search for a Pokémon by name or ID..."
-              className="pl-10 rounded-full border-2 focus-visible:ring-primary w-full"
+              placeholder="Search by name or ID..."
+              className={cn(
+                "w-full pl-12 py-3 text-sm border border-border transition-colors duration-200",
+                "rounded-xl bg-card shadow-sm",
+                "focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent",
+                "dark:bg-[#1e1e1e] dark:text-white"
+              )}
               value={query}
               onChange={handleInputChange}
               onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
               onKeyDown={handleKeyDown}
               autoComplete="off"
             />
           </motion.div>
         </div>
+
         <Button type="submit" className="ml-2 rounded-full">
           Search
         </Button>
