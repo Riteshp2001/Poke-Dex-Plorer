@@ -292,5 +292,10 @@ export function getStatColorClass(statName: string): string {
   return statColors[statName] || "bg-gray-500";
 }
 
+export const BASE_URL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://poke-dex-plorer.vercel.app";
+
 // Export fetchData so it can be used in other files
 export { fetchData };

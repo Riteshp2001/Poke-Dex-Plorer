@@ -1,7 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import PokemonTabs from "@/components/pokemon-tabs";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -9,8 +7,11 @@ import {
   fetchPokemonSpecies,
   getBackgroundByType,
 } from "@/lib/pokemon";
-import { Badge } from "@/components/ui/badge";
-import PokemonTabs from "@/components/pokemon-tabs";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { BASE_URL } from "@/lib/pokemon";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   try {
@@ -20,16 +21,64 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       notFound();
     }
     const pokemon = await fetchPokemonById(id);
+    const imageUrl =
+      pokemon.sprites.other["official-artwork"].front_default ||
+      "/all-pokemon.svg";
     return {
       title: `${
         pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
       } | PokeDex Explorer`,
-      description: `Learn all about ${pokemon.name} - stats, abilities, moves, and more.`,
+      description: `Learn all about ${pokemon.name} - stats, abilities, moves, and more. Explore with PokeDex Explorer by Ritesh Pandit, creative web developer.`,
+      authors: [
+        { name: "Ritesh Pandit", url: "https://riteshdpandit.vercel.app" },
+      ],
+      creator: "Ritesh Pandit",
+      openGraph: {
+        title: `${
+          pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+        } | PokeDex Explorer`,
+        description: `Learn all about ${pokemon.name} - stats, abilities, moves, and more.`,
+        url: `${BASE_URL}/pokedex/${pokemon.name.toLowerCase()}-${pokemon.id}`,
+        siteName: "PokeDex Explorer",
+        images: [
+          {
+            url: `${BASE_URL}/og?name=${encodeURIComponent(pokemon.name)}&id=${
+              pokemon.id
+            }&image=${encodeURIComponent(
+              imageUrl.startsWith("http") ? imageUrl : `${BASE_URL}${imageUrl}`
+            )}&type=${encodeURIComponent(pokemon.types[0]?.type.name || "")}`,
+            width: 1200,
+            height: 630,
+            alt: `${pokemon.name} Custom OG Image`,
+          },
+        ],
+        locale: "en_US",
+        type: "article",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${
+          pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+        } | PokeDex Explorer`,
+        description: `Learn all about ${pokemon.name} - stats, abilities, moves, and more.`,
+        creator: "@riteshdpandit",
+        images: [
+          `${BASE_URL}/og?name=${encodeURIComponent(pokemon.name)}&id=${
+            pokemon.id
+          }&image=${encodeURIComponent(
+            imageUrl.startsWith("http") ? imageUrl : `${BASE_URL}${imageUrl}`
+          )}&type=${encodeURIComponent(pokemon.types[0]?.type.name || "")}`,
+        ],
+      },
     };
   } catch (error) {
     return {
       title: "Pokémon Not Found | PokeDex Explorer",
       description: "The requested Pokémon could not be found.",
+      authors: [
+        { name: "Ritesh Pandit", url: "https://riteshdpandit.vercel.app" },
+      ],
+      creator: "Ritesh Pandit",
     };
   }
 }

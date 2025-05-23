@@ -1,45 +1,54 @@
-import Image from "next/image"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Progress } from "@/components/ui/progress"
-import { fetchPokemonById, fetchPokemonSpecies } from "@/lib/pokemon"
-import { PokemonEvolutions } from "@/components/pokemon-evolutions"
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Progress } from "@/components/ui/progress";
+import { fetchPokemonById, fetchPokemonSpecies } from "@/lib/pokemon";
+import { PokemonEvolutions } from "@/components/pokemon-evolutions";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   try {
-    const pokemon = await fetchPokemonById(Number.parseInt(params.id))
+    const pokemon = await fetchPokemonById(Number.parseInt(params.id));
     return {
-      title: `${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)} | Pokémon Explorer`,
+      title: `${
+        pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+      } | Pokémon Explorer`,
       description: `Learn all about ${pokemon.name} - stats, abilities, moves, and more.`,
-    }
+    };
   } catch (error) {
     return {
       title: "Pokémon Not Found | Pokémon Explorer",
       description: "The requested Pokémon could not be found.",
-    }
+    };
   }
 }
 
-export default async function PokemonPage({ params }: { params: { id: string } }) {
+export default async function PokemonPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   try {
-    const id = Number.parseInt(params.id)
-    const pokemon = await fetchPokemonById(id)
-    const species = await fetchPokemonSpecies(id)
+    const id = Number.parseInt(params.id);
+    const pokemon = await fetchPokemonById(id);
+    const species = await fetchPokemonSpecies(id);
 
     const englishFlavorText =
       species.flavor_text_entries
-        .find((entry) => entry.language.name === "en")
+        .find(
+          (entry: { language: { name: string } }) =>
+            entry.language.name === "en"
+        )
         ?.flavor_text.replace(/\f/g, " ")
         .replace(/\u00ad\n/g, "")
         .replace(/\u00ad/g, "")
-        .replace(/\n/g, " ") || "No description available."
+        .replace(/\n/g, " ") || "No description available.";
 
-    const prevId = id > 1 ? id - 1 : null
-    const nextId = id < 1010 ? id + 1 : null
+    const prevId = id > 1 ? id - 1 : null;
+    const nextId = id < 1010 ? id + 1 : null;
 
     return (
       <div className="container mx-auto px-4 py-8">
@@ -75,7 +84,10 @@ export default async function PokemonPage({ params }: { params: { id: string } }
         <div className="grid md:grid-cols-2 gap-8">
           <div className="bg-muted rounded-lg p-8 flex items-center justify-center">
             <Image
-              src={pokemon.sprites.other["official-artwork"].front_default || "/placeholder.svg"}
+              src={
+                pokemon.sprites.other["official-artwork"].front_default ||
+                "/placeholder.svg"
+              }
               alt={pokemon.name}
               width={400}
               height={400}
@@ -94,15 +106,19 @@ export default async function PokemonPage({ params }: { params: { id: string } }
                 >
                   {pokemon.name}
                 </h1>
-                <p className="text-2xl font-bold text-muted-foreground">#{pokemon.id.toString().padStart(3, "0")}</p>
+                <p className="text-2xl font-bold text-muted-foreground">
+                  #{pokemon.id.toString().padStart(3, "0")}
+                </p>
               </div>
 
               <div className="flex gap-2 mt-2">
-                {pokemon.types.map((type) => (
+                {pokemon.types.map((type: any) => (
                   <span
                     key={type.type.name}
                     className={`pokemon-type type-${type.type.name} px-3 py-1 text-sm`}
-                    style={{ viewTransitionName: `pokemon-type-${pokemon.id}-${type.type.name}` }}
+                    style={{
+                      viewTransitionName: `pokemon-type-${pokemon.id}-${type.type.name}`,
+                    }}
                   >
                     {type.type.name}
                   </span>
@@ -116,17 +132,23 @@ export default async function PokemonPage({ params }: { params: { id: string } }
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <h3 className="text-sm font-medium text-muted-foreground mb-1">Height</h3>
+                <h3 className="text-sm font-medium text-muted-foreground mb-1">
+                  Height
+                </h3>
                 <p className="text-lg font-medium">{pokemon.height / 10} m</p>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-muted-foreground mb-1">Weight</h3>
+                <h3 className="text-sm font-medium text-muted-foreground mb-1">
+                  Weight
+                </h3>
                 <p className="text-lg font-medium">{pokemon.weight / 10} kg</p>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-muted-foreground mb-1">Abilities</h3>
+                <h3 className="text-sm font-medium text-muted-foreground mb-1">
+                  Abilities
+                </h3>
                 <div className="flex flex-wrap gap-1">
-                  {pokemon.abilities.map((ability) => (
+                  {pokemon.abilities.map((ability: any) => (
                     <span key={ability.ability.name} className="capitalize">
                       {ability.ability.name.replace("-", " ")}
                       {ability.is_hidden && " (Hidden)"}
@@ -135,8 +157,12 @@ export default async function PokemonPage({ params }: { params: { id: string } }
                 </div>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-muted-foreground mb-1">Base Experience</h3>
-                <p className="text-lg font-medium">{pokemon.base_experience || "Unknown"}</p>
+                <h3 className="text-sm font-medium text-muted-foreground mb-1">
+                  Base Experience
+                </h3>
+                <p className="text-lg font-medium">
+                  {pokemon.base_experience || "Unknown"}
+                </p>
               </div>
             </div>
           </div>
@@ -154,13 +180,21 @@ export default async function PokemonPage({ params }: { params: { id: string } }
             <Card>
               <CardContent className="pt-6">
                 <div className="space-y-4">
-                  {pokemon.stats.map((stat) => (
+                  {pokemon.stats.map((stat: any) => (
                     <div key={stat.stat.name} className="space-y-1">
                       <div className="flex justify-between">
-                        <span className="text-sm font-medium capitalize">{stat.stat.name.replace("-", " ")}</span>
-                        <span className="text-sm font-medium">{stat.base_stat}</span>
+                        <span className="text-sm font-medium capitalize">
+                          {stat.stat.name.replace("-", " ")}
+                        </span>
+                        <span className="text-sm font-medium">
+                          {stat.base_stat}
+                        </span>
                       </div>
-                      <Progress value={stat.base_stat} max={255} className="h-2" />
+                      <Progress
+                        value={stat.base_stat}
+                        max={255}
+                        className="h-2"
+                      />
                     </div>
                   ))}
                 </div>
@@ -172,14 +206,18 @@ export default async function PokemonPage({ params }: { params: { id: string } }
             <Card>
               <CardContent className="pt-6">
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                  {pokemon.moves.slice(0, 20).map((move) => (
+                  {pokemon.moves.slice(0, 20).map((move: any) => (
                     <div key={move.move.name} className="p-2 bg-muted rounded">
-                      <p className="capitalize text-sm">{move.move.name.replace("-", " ")}</p>
+                      <p className="capitalize text-sm">
+                        {move.move.name.replace("-", " ")}
+                      </p>
                     </div>
                   ))}
                 </div>
                 {pokemon.moves.length > 20 && (
-                  <p className="text-sm text-muted-foreground mt-4">Showing 20 of {pokemon.moves.length} moves</p>
+                  <p className="text-sm text-muted-foreground mt-4">
+                    Showing 20 of {pokemon.moves.length} moves
+                  </p>
                 )}
               </CardContent>
             </Card>
@@ -188,7 +226,9 @@ export default async function PokemonPage({ params }: { params: { id: string } }
           <TabsContent value="evolution" className="mt-6">
             <Card>
               <CardContent className="pt-6">
-                <PokemonEvolutions speciesId={pokemon.species.url.split("/").slice(-2, -1)[0]} />
+                <PokemonEvolutions
+                  speciesId={pokemon.species.url.split("/").slice(-2, -1)[0]}
+                />
               </CardContent>
             </Card>
           </TabsContent>
@@ -200,13 +240,17 @@ export default async function PokemonPage({ params }: { params: { id: string } }
                   {pokemon.sprites.front_default && (
                     <div className="flex flex-col items-center">
                       <Image
-                        src={pokemon.sprites.front_default || "/placeholder.svg"}
+                        src={
+                          pokemon.sprites.front_default || "/placeholder.svg"
+                        }
                         alt={`${pokemon.name} front default`}
                         width={96}
                         height={96}
                         className="pixelated"
                       />
-                      <span className="text-xs text-muted-foreground mt-1">Front Default</span>
+                      <span className="text-xs text-muted-foreground mt-1">
+                        Front Default
+                      </span>
                     </div>
                   )}
                   {pokemon.sprites.back_default && (
@@ -218,7 +262,9 @@ export default async function PokemonPage({ params }: { params: { id: string } }
                         height={96}
                         className="pixelated"
                       />
-                      <span className="text-xs text-muted-foreground mt-1">Back Default</span>
+                      <span className="text-xs text-muted-foreground mt-1">
+                        Back Default
+                      </span>
                     </div>
                   )}
                   {pokemon.sprites.front_shiny && (
@@ -230,7 +276,9 @@ export default async function PokemonPage({ params }: { params: { id: string } }
                         height={96}
                         className="pixelated"
                       />
-                      <span className="text-xs text-muted-foreground mt-1">Front Shiny</span>
+                      <span className="text-xs text-muted-foreground mt-1">
+                        Front Shiny
+                      </span>
                     </div>
                   )}
                   {pokemon.sprites.back_shiny && (
@@ -242,7 +290,9 @@ export default async function PokemonPage({ params }: { params: { id: string } }
                         height={96}
                         className="pixelated"
                       />
-                      <span className="text-xs text-muted-foreground mt-1">Back Shiny</span>
+                      <span className="text-xs text-muted-foreground mt-1">
+                        Back Shiny
+                      </span>
                     </div>
                   )}
                 </div>
@@ -251,9 +301,9 @@ export default async function PokemonPage({ params }: { params: { id: string } }
           </TabsContent>
         </Tabs>
       </div>
-    )
+    );
   } catch (error) {
-    console.error("Error fetching pokemon:", error)
-    notFound()
+    console.error("Error fetching pokemon:", error);
+    notFound();
   }
 }
