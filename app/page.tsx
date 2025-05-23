@@ -99,33 +99,34 @@ export default function Home() {
               </Link>
             </Button>
           </div>
-          <div className="flex justify-center">
-            <div className="relative" style={{ width: 900, height: 350 }}>
+            <div className="flex justify-center">
+            <div
+              className="relative"
+              style={{ width: "100%", maxWidth: 900, height: "auto", aspectRatio: "16/7" }}
+            >
               <div className="absolute -z-10 inset-0 blur-3xl opacity-20 rounded-full bg-gradient-to-r from-blue-500 via-green-500 to-yellow-500 dark:from-blue-700 dark:via-green-700 dark:to-yellow-600"></div>
               <Image
-                src="/all-pokemon.svg"
-                alt="PokeDex Explorer"
-                fill
-                className="float-animation"
-                sizes="(max-width: 768px) 100vw, 350px"
-                priority
-                style={{
-                  filter:
-                    "drop-shadow(0 0 24px #60a5fa) drop-shadow(0 0 8px #facc15)",
-                  // Add color inversion for dark mode
-                  // Next.js doesn't support prefers-color-scheme in style prop, so use Tailwind below
-                }}
+              src="/all-pokemon.svg"
+              alt="PokeDex Explorer"
+              fill
+              className="float-animation"
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 75vw, 900px"
+              priority
+              style={{
+                filter:
+                "drop-shadow(0 0 24px #60a5fa) drop-shadow(0 0 8px #facc15)",
+              }}
               />
               <style jsx global>{`
-                @media (prefers-color-scheme: dark) {
-                  img[alt="PokeDex Explorer"] {
-                    filter: invert(1) hue-rotate(180deg)
-                      drop-shadow(0 0 24px #2563eb) drop-shadow(0 0 8px #fde047);
-                  }
+              @media (prefers-color-scheme: dark) {
+                img[alt="PokeDex Explorer"] {
+                filter: invert(1) hue-rotate(180deg)
+                  drop-shadow(0 0 24px #2563eb) drop-shadow(0 0 8px #fde047);
                 }
+              }
               `}</style>
             </div>
-          </div>
+            </div>
         </div>
       </section>
     </main>
