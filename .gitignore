@@ -1,62 +1,27 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-node_modules
-/.pnp
-.pnp.js
+/node_modules
 
-# testing
-/coverage
+# next.js
+/.next/
+/out/
 
-# Vite build output
-/dist
+# production
+/build
 
-# local env files
-.env
-.env.local
-.env.*.local
-
-# Log files
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
+.pnpm-debug.log*
 
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# env files
+.env*
 
-# MacOS system files
-.DS_Store
+# vercel
+.vercel
 
-# Windows system files
-Thumbs.db
-
-# Other system files
-._*
-.hidden
-Desktop.ini
-
-# Optional npm cache directory
-.npm
-
-# Vite cache
-.vite
-
-# Optional eslint cache
-.eslintcache
-
-# Optional stylelint cache
-.stylelintcache
-
-# Optional Prettier cache
-.prettiercache
-
-# Build directories for various environments
-/build
-/out
+# typescript
+*.tsbuildinfo
+next-env.d.ts
