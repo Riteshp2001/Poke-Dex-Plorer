@@ -1,15 +1,25 @@
-"use client"
-import { Card } from "@/components/ui/card"
-import { fetchData } from "@/lib/pokemon"
-import { motion } from "framer-motion"
+"use client";
+
+import { Card } from "@/components/ui/card";
+import { fetchData } from "@/lib/pokemon";
+import { motion } from "framer-motion";
+import React from "react";
 
 async function fetchGenerations() {
-  const data = await fetchData("https://pokeapi.co/api/v2/generation")
-  return data.results
+  const data = await fetchData("https://pokeapi.co/api/v2/generation");
+  return data.results;
 }
 
-export default async function GenerationsPage() {
-  const generations = await fetchGenerations()
+export default function GenerationsPage() {
+  const [generations, setGenerations] = React.useState([]);
+
+  React.useEffect(() => {
+    async function loadGenerations() {
+      const data = await fetchGenerations();
+      setGenerations(data);
+    }
+    loadGenerations();
+  }, []);
 
   const genInfo = [
     { region: "Kanto", games: "Red, Blue, Yellow", color: "from-red-500 to-blue-500" },
@@ -21,7 +31,7 @@ export default async function GenerationsPage() {
     { region: "Alola", games: "Sun, Moon, Ultra Sun, Ultra Moon", color: "from-yellow-400 to-blue-400" },
     { region: "Galar", games: "Sword, Shield", color: "from-blue-500 to-red-500" },
     { region: "Paldea", games: "Scarlet, Violet", color: "from-red-500 to-purple-500" },
-  ]
+  ];
 
   return (
     <main className="container mx-auto px-4 py-8">
@@ -42,4 +52,17 @@ export default async function GenerationsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05 * index }}
           >
-            <Card className="overflow\
+            <Card className="overflow-hidden">
+              <div className="p-4">
+                <h2 className="text-xl font-bold mb-2">{gen.name}</h2>
+                <p className="text-sm text-muted-foreground">
+                  {genInfo[index]?.region || "Unknown Region"} - {genInfo[index]?.games || "Unknown Games"}
+                </p>
+              </div>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+    </main>
+  );
+}
