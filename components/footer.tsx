@@ -29,7 +29,7 @@ export function Footer() {
 
         <div className="flex items-center gap-4">
           <Link
-            href="github.com/Riteshp2001/Poke-Dex-Plorer"
+            href="https://github.com/Riteshp2001/Poke-Dex-Plorer"
             target="_blank"
             rel="noreferrer"
             className="text-sm font-medium underline underline-offset-4 flex items-center gap-1"
