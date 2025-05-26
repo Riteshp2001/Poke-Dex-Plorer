@@ -127,7 +127,9 @@ export default async function PokemonPage({
 								className="rounded-full"
 								asChild
 							>
-								<Link href={`/pokedex/${prevPokemonName}-${prevId}`}>
+								<Link
+									href={`/pokedex/${prevPokemonName}-${pokemon.types[0]?.type.name.toLowerCase()}-${prevId}`}
+								>
 									<ChevronLeft className="h-4 w-4" />
 									<span className="sr-only">Previous Pokémon</span>
 								</Link>
@@ -141,7 +143,9 @@ export default async function PokemonPage({
 								className="rounded-full"
 								asChild
 							>
-								<Link href={`/pokedex/${nextPokemonName}-${nextId}`}>
+								<Link
+									href={`/pokedex/${nextPokemonName}-${pokemon.types[0]?.type.name.toLowerCase()}-${nextId}`}
+								>
 									<ChevronRight className="h-4 w-4" />
 									<span className="sr-only">Next Pokémon</span>
 								</Link>
@@ -163,7 +167,7 @@ export default async function PokemonPage({
 							width={400}
 							height={400}
 							priority
-							className="transition-all duration-300 hover:scale-105 drop-shadow-xl"
+							className="transition-all duration-300 hover:scale-105 drop-shadow-2xl"
 						/>
 					</div>
 

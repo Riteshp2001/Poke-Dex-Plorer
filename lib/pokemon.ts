@@ -312,10 +312,14 @@ export function getStatColorClass(statName: string): string {
 		"special-attack": "bg-blue-500",
 		"special-defense": "bg-green-500",
 		speed: "bg-pink-500",
+		accuracy: "bg-purple-500",
+		evasion: "bg-indigo-500",
 	};
 
-	return statColors[statName] || "bg-gray-500";
+	// Lowercase match to ensure safety
+	return statColors[statName.toLowerCase()] || "bg-gray-500";
 }
+
 
 export const BASE_URL =
 	process.env.NODE_ENV === "development"
