@@ -16,7 +16,6 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 	try {
 		const slug = (await params).id; // Await params before accessing its properties
 		const id = parseInt(slug.split("-").pop() || "");
-		console.log("Generating metadata for Pokémon ID:", id);
 		if (isNaN(id)) {
 			notFound();
 		}

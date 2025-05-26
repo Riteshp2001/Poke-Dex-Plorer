@@ -12,21 +12,16 @@ export const contentType = "image/png";
 export default async function Icon({ params }: { params: { id: string } }) {
 	// Determine the background color based on the Pokémon's type
 	const slug = await params.id;
-	console.log("Generating icon for Pokémon:", slug);
 
 	const parts = slug.split("-");
 	if (parts.length < 2) {
-		throw new Error(
+		console.error(
 			`Invalid 'id' format: ${slug}. Expected format 'name-type-id'.`
 		);
 	}
 
 	const pokemonType = parts[1];
-	const background = getTypeColorClass(pokemonType) || "#cccccc"; // Default to a neutral color if undefined
-
-	if (!background) {
-		throw new Error(`No background found for type: ${pokemonType}`);
-	}
+	const background = getTypeColorClass(pokemonType) || "#cccccc";
 
 	return new ImageResponse(
 		(
