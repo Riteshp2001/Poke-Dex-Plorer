@@ -24,9 +24,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 			pokemon.sprites.other["official-artwork"].front_default ||
 			"/all-pokemon.svg";
 		return {
-			title: `${
-				pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
-			} | PokeDex Explorer`,
+			title: `${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}`,
 			description: `Learn all about ${pokemon.name} - stats, abilities, moves, and more. Explore with PokeDex Explorer by Ritesh Pandit, creative web developer.`,
 			authors: [
 				{ name: "Ritesh Pandit", url: "https://riteshdpandit.vercel.app" },
@@ -166,17 +164,13 @@ export default async function PokemonPage({
 							height={400}
 							priority
 							className="transition-all duration-300 hover:scale-105 drop-shadow-xl"
-							style={{ viewTransitionName: `pokemon-image-${pokemon.id}` }}
 						/>
 					</div>
 
 					<div className="space-y-6">
 						<div>
 							<div className="flex items-center justify-between">
-								<h1
-									className="text-4xl font-bold capitalize"
-									style={{ viewTransitionName: `pokemon-name-${pokemon.id}` }}
-								>
+								<h1 className="text-4xl font-bold capitalize">
 									{pokemon.name}
 								</h1>
 								<p className="text-2xl font-bold text-muted-foreground font-mono">
@@ -189,9 +183,6 @@ export default async function PokemonPage({
 									<span
 										key={type.type.name}
 										className={`pokemon-type type-${type.type.name} px-4 py-1.5 text-sm`}
-										style={{
-											viewTransitionName: `pokemon-type-${pokemon.id}-${type.type.name}`,
-										}}
 									>
 										{type.type.name}
 									</span>

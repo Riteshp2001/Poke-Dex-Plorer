@@ -2,17 +2,17 @@
 	"name": "pokedex-plorer",
 	"version": "1.0.0",
 	"private": false,
-	"description": "A modern Pokedex explorer built with Next.js and Radix UI.",
+	"description": "A modern Pokedex explorer built with Next.js and Modern UI.",
 	"author": "Ritesh Pandit <riteshp2001@gmail.com>",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/yourusername/pokedex-plorer.git"
+		"url": "https://github.com/Riteshp2001/Poke-Dex-Plorer"
 	},
 	"bugs": {
-		"url": "https://github.com/yourusername/pokedex-plorer/issues"
+		"url": "https://github.com/Riteshp2001/Poke-Dex-Plorer/issues"
 	},
-	"homepage": "https://github.com/yourusername/pokedex-plorer#readme",
+	"homepage": "https://poke-dex-plorer.vercel.app/",
 	"keywords": [
 		"pokedex",
 		"pokemon",

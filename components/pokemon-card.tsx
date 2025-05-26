@@ -59,19 +59,13 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
 								width={180}
 								height={180}
 								className="drop-shadow-lg"
-								style={{ viewTransitionName: `pokemon-image-${pokemon.id}` }}
 							/>
 						</motion.div>
 					</div>
 					<CardContent className="p-4">
 						<div className="flex items-center justify-between">
 							<div>
-								<h3
-									className="font-bold capitalize text-lg"
-									style={{ viewTransitionName: `pokemon-name-${pokemon.id}` }}
-								>
-									{pokemon.name}
-								</h3>
+								<h3 className="font-bold capitalize text-lg">{pokemon.name}</h3>
 								<p className="text-sm text-muted-foreground font-mono">
 									#{pokemon.id.toString().padStart(3, "0")}
 								</p>
@@ -81,9 +75,6 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
 									<span
 										key={type.type.name}
 										className={`pokemon-type type-${type.type.name}`}
-										style={{
-											viewTransitionName: `pokemon-type-${pokemon.id}-${type.type.name}`,
-										}}
 									>
 										{type.type.name}
 									</span>

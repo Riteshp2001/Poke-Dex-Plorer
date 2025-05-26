@@ -99,17 +99,13 @@ export default async function PokemonPage({
 							height={400}
 							priority
 							className="transition-all duration-300 hover:scale-105"
-							style={{ viewTransitionName: `pokemon-image-${pokemon.id}` }}
 						/>
 					</div>
 
 					<div className="space-y-6">
 						<div>
 							<div className="flex items-center justify-between">
-								<h1
-									className="text-4xl font-bold capitalize"
-									style={{ viewTransitionName: `pokemon-name-${pokemon.id}` }}
-								>
+								<h1 className="text-4xl font-bold capitalize">
 									{pokemon.name}
 								</h1>
 								<p className="text-2xl font-bold text-muted-foreground">
@@ -122,9 +118,6 @@ export default async function PokemonPage({
 									<span
 										key={type.type.name}
 										className={`pokemon-type type-${type.type.name} px-3 py-1 text-sm`}
-										style={{
-											viewTransitionName: `pokemon-type-${pokemon.id}-${type.type.name}`,
-										}}
 									>
 										{type.type.name}
 									</span>
