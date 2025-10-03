@@ -21,10 +21,7 @@ export function PokemonEvolutions({ speciesId }: PokemonEvolutionsProps) {
         setLoading(true)
         const chain = await fetchEvolutionChain(Number.parseInt(speciesId))
 
-        // Process evolution chain
         const processedChain: any[] = []
-
-        // Add delay function to prevent rate limiting
         const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
         const processChain = async (chain: any) => {
@@ -36,24 +33,24 @@ export function PokemonEvolutions({ speciesId }: PokemonEvolutionsProps) {
 
             processedChain.push({
               id,
-              name: chain.species.name,
+              name: pokemon.name,
+              type: pokemon.types?.[0]?.type?.name || "unknown",
               sprite: pokemon.sprites.other["official-artwork"].front_default,
             })
           } catch (error) {
             console.error(`Error fetching Pokemon ${id}:`, error)
-            // Add basic info even if detailed fetch fails
             processedChain.push({
               id,
               name: chain.species.name,
+              type: "unknown",
               sprite: null,
             })
           }
 
           if (chain.evolves_to.length > 0) {
-            // Process each evolution with a delay between requests
             for (const evolution of chain.evolves_to) {
               await processChain(evolution)
-              await delay(300) // Add delay between requests
+              await delay(300)
             }
           }
         }
@@ -80,24 +77,30 @@ export function PokemonEvolutions({ speciesId }: PokemonEvolutionsProps) {
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-4">
-      {evolutionChain.map((pokemon, index) => (
-        <div key={pokemon.id} className="flex items-center">
-          <motion.div whileHover={{ scale: 1.05 }} className="flex flex-col items-center">
-            <Link href={`/pokemon/${pokemon.id}`}>
-              <Image
-                src={pokemon.sprite || "/placeholder.svg"}
-                alt={pokemon.name}
-                width={120}
-                height={120}
-                className="transition-all duration-300"
-              />
-              <p className="text-center capitalize mt-2">{pokemon.name}</p>
-            </Link>
-          </motion.div>
+      {evolutionChain.map((pokemon, index) => {
+        const slug = `/pokedex/${pokemon.name}-${pokemon.type}-${pokemon.id}`
 
-          {index < evolutionChain.length - 1 && <ChevronRight className="mx-2 h-6 w-6 text-muted-foreground" />}
-        </div>
-      ))}
+        return (
+          <div key={pokemon.id} className="flex items-center">
+            <motion.div whileHover={{ scale: 1.05 }} className="flex flex-col items-center">
+              <Link href={slug}>
+                <Image
+                  src={pokemon.sprite || "/placeholder.svg"}
+                  alt={pokemon.name}
+                  width={120}
+                  height={120}
+                  className="transition-all duration-300"
+                />
+                <p className="text-center capitalize mt-2">{pokemon.name}</p>
+              </Link>
+            </motion.div>
+
+            {index < evolutionChain.length - 1 && (
+              <ChevronRight className="mx-2 h-6 w-6 text-muted-foreground" />
+            )}
+          </div>
+        )
+      })}
     </div>
   )
 }
